@@ -3,13 +3,17 @@ import { Action } from '../models/Game';
 
 
 export type KeyboardMap = Map<string, Action>;
-
+const ARR = 0;
+const DAS = 100;
 export const useKeyboardControls = (
     keyboardMap: KeyboardMap,
     dispatch: React.Dispatch<Action>
 ): void => {
+    const currentAction = React.useRef<Action | null>(null);
+    const dasTimer = React.useRef<number | null>(null);
+    const arrTimer = React.useRef<number | null>(null);
     React.useEffect(() => {
-        const keyboardDispatch = Object.entries(keyboardMap).reduce<KeyboardDispatch>((output, [key, action]) => {
+        const keyboardDispatch = [...keyboardMap.entries()].reduce<KeyboardDispatch>((output, [key, action]) => {
             output[key] = () => dispatch(action);
             return output;
         }, {});
@@ -17,10 +21,21 @@ export const useKeyboardControls = (
             if (event.repeat) return;
             if (event.type == "keyup") {
                 console.log('up');
-                keyboardDispatch[event.key + "_done"]?.();
+                if (currentAction.current == keyboardMap.get(event.key)) {
+                    if(dasTimer.current) clearTimeout(dasTimer.current);
+                    if(arrTimer.current) clearInterval(arrTimer.current);
+                }
             }
             else {
                 console.log('down')
+                if (keyboardMap.get(event.key) == 'MOVE_LEFT' || keyboardMap.get(event.key) == 'MOVE_RIGHT') {
+                    if (dasTimer.current) clearTimeout(dasTimer.current);
+                    if (arrTimer.current) clearInterval(arrTimer.current);
+                    currentAction.current = keyboardMap.get(event.key) as Action;
+                    dasTimer.current = setTimeout(() => {
+                        arrTimer.current = setInterval(() => { keyboardDispatch[event.key]?.() }, ARR);
+                    }, DAS);
+                }
                 keyboardDispatch[event.key]?.();
             }
         }

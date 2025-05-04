@@ -9,8 +9,6 @@ import {
     flipCounterclockwise,
     moveDown,
     moveLeft,
-    moveFarLeft,
-    moveFarRight,
     moveRight,
     setPiece,
     hardDrop,
