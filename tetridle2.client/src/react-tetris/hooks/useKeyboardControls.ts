@@ -4,6 +4,7 @@ import { Action } from '../models/Game';
 
 export type KeyboardMap = Map<string, Action>;
 const ARR = 0;
+const SOFTDROP_SPEED = 0;
 const DAS = 100;
 export const useKeyboardControls = (
     keyboardMap: KeyboardMap,
@@ -12,6 +13,7 @@ export const useKeyboardControls = (
     const currentAction = React.useRef<Action | null>(null);
     const dasTimer = React.useRef<number | null>(null);
     const arrTimer = React.useRef<number | null>(null);
+    const softDropTimer = React.useRef<number | null>(null);
     React.useEffect(() => {
         const keyboardDispatch = [...keyboardMap.entries()].reduce<KeyboardDispatch>((output, [key, action]) => {
             output[key] = () => dispatch(action);
@@ -25,9 +27,14 @@ export const useKeyboardControls = (
                     if(dasTimer.current) clearTimeout(dasTimer.current);
                     if(arrTimer.current) clearInterval(arrTimer.current);
                 }
+                if (keyboardMap.get(event.key) == 'MOVE_DOWN') {
+                    if (softDropTimer.current) clearInterval(softDropTimer.current);
+                    softDropTimer.current = null;
+                }
             }
             else {
                 console.log('down')
+
                 if (keyboardMap.get(event.key) == 'MOVE_LEFT' || keyboardMap.get(event.key) == 'MOVE_RIGHT') {
                     if (dasTimer.current) clearTimeout(dasTimer.current);
                     if (arrTimer.current) clearInterval(arrTimer.current);
@@ -35,6 +42,10 @@ export const useKeyboardControls = (
                     dasTimer.current = setTimeout(() => {
                         arrTimer.current = setInterval(() => { keyboardDispatch[event.key]?.() }, ARR);
                     }, DAS);
+                    
+                }
+                if (keyboardMap.get(event.key) == 'MOVE_DOWN') {
+                    softDropTimer.current = setInterval(() => { keyboardDispatch[event.key]?.() }, SOFTDROP_SPEED);
                 }
                 keyboardDispatch[event.key]?.();
             }
