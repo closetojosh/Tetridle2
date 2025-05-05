@@ -18,12 +18,12 @@ const PieceView: React.FC<Props> = ({ piece }): JSX.Element => {
 
   const rows = blocks.map((row, i) => {
     const blocksInRow = row.map((block, j) => {
-      let classString = 'game-block ';
+      let classString = 'game-block-piece-view ';
 
       if (piece && block) {
         classString += getClassName(piece);
       } else {
-        classString += 'block-empty';
+        classString += 'block-empty-piece-view';
       }
 
       return <td key={j} className={classString} />;

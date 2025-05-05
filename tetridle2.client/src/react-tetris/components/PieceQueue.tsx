@@ -3,10 +3,12 @@ import PieceView from './PieceView';
 import { Context } from '../context';
 
 export default function PieceQueue(): JSX.Element {
-  const { queue } = React.useContext(Context);
+    const { queue } = React.useContext(Context);
+  //max length is 6 so this will always be enough
+  const paddedQueue = [...queue, 'E', 'E', 'E', 'E', 'E', 'E'] as const
   return (
     <div>
-      {queue.queue.map((piece, i) => (
+      {paddedQueue.slice(0, 6).map((piece, i) => (
         <PieceView piece={piece} key={i} />
       ))}
     </div>

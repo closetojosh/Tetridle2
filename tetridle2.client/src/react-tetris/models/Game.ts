@@ -20,7 +20,16 @@ import Settings from '../settings';
 export type State = 'PAUSED' | 'PLAYING' | 'LOST';
 
 type HeldPiece = { available: boolean; piece: Piece };
-
+export type Clear = {
+    lines: 1 | 2 | 3 | 4;
+    isTSpin: boolean;
+    isPerfectClear: boolean;
+}
+export type Mission = {
+    startingPosition: Matrix;
+    clears: Clear[];
+    pieces: Piece[];
+}
 export type Game = {
     state: State;
     matrix: Matrix;
@@ -31,6 +40,7 @@ export type Game = {
     lines: number;
     dasTimers: { left: number; right: number };
     bottomOutTicks: number;
+    mission: Mission;
 };
 
 
@@ -51,11 +61,29 @@ export type Action =
     | 'FLIP_180'
     | 'RESTART';
 
+export const init = (mission: Mission): Game => {
+    //Make API call to get the mission
+    const queue = PieceQueue.create(mission);
+    const next = PieceQueue.getNext(queue);
+    return {
+        state: 'PLAYING',
+        points: 0,
+        lines: 0,
+        matrix: buildMatrix(),
+        piece: initializePiece(next.piece),
+        heldPiece: undefined,
+        queue: next.queue,
+        dasTimers: { left: -1, right: -1 },
+        bottomOutTicks: 0,
+        mission: mission
+    };
+};
+
 export const update = (game: Game, action: Action): Game => {
 
     switch (action) {
         case 'RESTART': {
-            return init();
+            return init(game.mission);
         }
         case 'PAUSE': {
             return game.state === 'PLAYING' ? { ...game, state: 'PAUSED' } : game;
@@ -155,7 +183,7 @@ const lockInPiece = (game: Game): Game => {
     const piece = initializePiece(next.piece);
     return {
         ...game,
-        state: isEmptyPosition(matrix, piece) ? game.state : 'LOST',
+        state: next.piece != 'E' && isEmptyPosition(matrix, piece) ? game.state : 'LOST',
         matrix,
         piece,
         heldPiece: game.heldPiece
@@ -198,26 +226,9 @@ const applyMove = (
     const afterFlip = move(game.matrix, game.piece);
     return afterFlip ? { ...game, piece: afterFlip } : game;
 };
-export const init = (): Game => {
-    const queue = PieceQueue.create(5);
-    const next = PieceQueue.getNext(queue);
-    return {
-        state: 'PLAYING',
-        points: 0,
-        lines: 0,
-        matrix: buildMatrix(),
-        piece: initializePiece(next.piece),
-        heldPiece: undefined,
-        queue: next.queue,
-        dasTimers: { left: -1, right: -1 },
-        bottomOutTicks: 0
-    };
-};
-
-// Good display of merging piece + matrix
 export function viewMatrix(game: Game): Matrix {
     let gameboard = game.matrix;
-
+    if (game.piece.piece == 'E') return gameboard;
     // set the preview
     gameboard = addPieceToBoard(gameboard, hardDrop(gameboard, game.piece), true);
 
