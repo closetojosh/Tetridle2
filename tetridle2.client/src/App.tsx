@@ -82,19 +82,11 @@ const App = () => {
                     HeldPiece,
                     Gameboard,
                     PieceQueue,
-                    state,
-                    controller
                 }) => (
                     <div className="game">
                         <HeldPiece />
                         <Gameboard />
                         <PieceQueue />
-                        {state === 'LOST' && (
-                            <div>
-                                <h2>Game Over</h2>
-                                <button onClick={controller.restart}>New game</button>
-                            </div>
-                        )}
                     </div>
                 )}
             </Tetris>

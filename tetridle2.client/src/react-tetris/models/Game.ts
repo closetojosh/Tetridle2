@@ -68,7 +68,7 @@ export const init = (mission: Mission): Game => {
     const queue = PieceQueue.create(mission);
     const next = PieceQueue.getNext(queue);
     return {
-        state: 'PAUSED',
+        state: 'PLAYING',
         points: 0,
         lines: 0,
         matrix: buildMatrix(),
@@ -183,9 +183,12 @@ const lockInPiece = (game: Game): Game => {
     const [matrix, linesCleared] = setPiece(game.matrix, game.piece);
     const next = PieceQueue.getNext(game.queue);
     const piece = initializePiece(next.piece);
+    const isLost = next.piece == 'E' || !isEmptyPosition(matrix, piece);
+    if (isLost) {
+        return init(game.mission);
+    }
     return {
         ...game,
-        state: next.piece != 'E' && isEmptyPosition(matrix, piece) ? game.state : 'LOST',
         matrix,
         piece,
         heldPiece: game.heldPiece
