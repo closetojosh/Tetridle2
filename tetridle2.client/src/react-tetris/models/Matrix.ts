@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import Constants from '../constants';
+import { KickOffsets, getKickData, tk } from '../srsKicks';
 import { Piece, Rotation, getBlocks, isRotation } from './Piece';
 
 const { GAME_HEIGHT, GAME_WIDTH } = Constants;
@@ -140,7 +141,52 @@ export function isEmptyPosition(
 function assert(value: unknown): asserts value {
   if (!value) throw new Error('assertion failed');
 }
+function tryRotation(
+    gameboard: Matrix,
+    currentPiece: PositionedPiece,
+    targetRotation: Rotation,
+    kickTable: Record<string, KickOffsets>
+): PositionedPiece | undefined {
+    const { piece, rotation: currentRotation, position } = currentPiece;
 
+    // O piece doesn't rotate
+    if (piece === 'O') {
+        return currentPiece;
+    }
+
+    const transitionKey = tk(currentRotation, targetRotation);
+    const offsets = kickTable[transitionKey];
+
+    if (!offsets) {
+        console.warn(`No kick data found for piece ${piece} transition ${transitionKey}`);
+        // Fallback: try rotating without kicks (or just fail)
+        const rotatedPiece: PositionedPiece = { ...currentPiece, rotation: targetRotation };
+        return isEmptyPosition(gameboard, rotatedPiece) ? rotatedPiece : undefined;
+        // return undefined; // Or uncomment this line to strictly fail if no kicks defined
+    }
+
+    // Try each kick offset
+    for (const offset of offsets) {
+        const [dx, dy] = offset;
+        const testPosition: Coords = {
+            x: position.x + dx,
+            y: position.y + dy,
+        };
+        const testPiece: PositionedPiece = {
+            piece: piece,
+            rotation: targetRotation,
+            position: testPosition,
+        };
+
+        if (isEmptyPosition(gameboard, testPiece)) {
+            // Found a valid position
+            return testPiece;
+        }
+    }
+
+    // No valid kick offset found
+    return undefined;
+}
 function tryMove(move: (pp: PositionedPiece) => PositionedPiece) {
   return function (
     gameboard: Matrix,
@@ -182,27 +228,50 @@ export const moveDown = tryMove((positionedPiece: PositionedPiece) => {
 
   return { ...positionedPiece, position: newPosition };
 });
+export function rotateClockwise(
+    gameboard: Matrix,
+    positionedPiece: PositionedPiece
+): PositionedPiece | undefined {
+    if (positionedPiece.piece === 'O') return positionedPiece; // O piece doesn't rotate
 
-export const flipClockwise = tryMove((positionedPiece: PositionedPiece) => {
-  const rotation =
-    ((positionedPiece.rotation ?? 0) + 1) % Constants.ROTATION_COUNT;
-  assert(isRotation(rotation));
-  return { ...positionedPiece, rotation };
-});
-export const flip180 = tryMove((positionedPiece: PositionedPiece) => {
-    const rotation =
-        ((positionedPiece.rotation ?? 0) + 2) % Constants.ROTATION_COUNT;
-    assert(isRotation(rotation));
-    return { ...positionedPiece, rotation };
-});
-export const flipCounterclockwise = tryMove(
-  (positionedPiece: PositionedPiece) => {
-    let rotation = (positionedPiece.rotation ?? 0) - 1;
-    if (rotation < 0) rotation += Constants.ROTATION_COUNT;
-    assert(isRotation(rotation));
-    return { ...positionedPiece, rotation };
-  }
-);
+    const currentRotation = positionedPiece.rotation;
+    const targetRotation = ((currentRotation + 1) % Constants.ROTATION_COUNT) as Rotation;
+
+    const kickTable = getKickData(positionedPiece.piece, 'clockwise');
+
+    return tryRotation(gameboard, positionedPiece, targetRotation, kickTable);
+}
+
+export function rotateCounterclockwise(
+    gameboard: Matrix,
+    positionedPiece: PositionedPiece
+): PositionedPiece | undefined {
+    if (positionedPiece.piece === 'O') return positionedPiece; // O piece doesn't rotate
+
+    const currentRotation = positionedPiece.rotation;
+    let targetRotation = currentRotation - 1;
+    if (targetRotation < 0) {
+        targetRotation += Constants.ROTATION_COUNT;
+    }
+
+    const kickTable = getKickData(positionedPiece.piece, 'counterClockwise');
+
+    return tryRotation(gameboard, positionedPiece, targetRotation as Rotation, kickTable);
+}
+
+export function rotate180(
+    gameboard: Matrix,
+    positionedPiece: PositionedPiece
+): PositionedPiece | undefined {
+    if (positionedPiece.piece === 'O') return positionedPiece; // O piece doesn't rotate
+
+    const currentRotation = positionedPiece.rotation;
+    const targetRotation = ((currentRotation + 2) % Constants.ROTATION_COUNT) as Rotation;
+
+    const kickTable = getKickData(positionedPiece.piece, '180');
+
+    return tryRotation(gameboard, positionedPiece, targetRotation, kickTable);
+}
 
 export function hardDrop(
   gameboard: Matrix,

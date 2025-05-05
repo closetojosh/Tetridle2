@@ -5,14 +5,14 @@ import {
     buildMatrix,
     addPieceToBoard,
     isEmptyPosition,
-    flipClockwise,
-    flipCounterclockwise,
+    rotateClockwise,
+    rotateCounterclockwise,
     moveDown,
     moveLeft,
     moveRight,
     setPiece,
     hardDrop,
-    flip180
+    rotate180
 } from './Matrix';
 import Constants from '../constants';
 import * as PieceQueue from '../modules/piece-queue';
@@ -101,13 +101,13 @@ export const update = (game: Game, action: Action): Game => {
             return applyMove(moveRight, game);
         }
         case 'FLIP_CLOCKWISE': {
-            return applyMove(flipClockwise, game);
+            return applyMove(rotateClockwise, game);
         }
         case 'FLIP_COUNTERCLOCKWISE': {
-            return applyMove(flipCounterclockwise, game);
+            return applyMove(rotateCounterclockwise, game);
         }
         case 'FLIP_180': {
-            return applyMove(flip180, game);
+            return applyMove(rotate180, game);
         }
         case 'HOLD': {
             if (game.state !== 'PLAYING') return game;
