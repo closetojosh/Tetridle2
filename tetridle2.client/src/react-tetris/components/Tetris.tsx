@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Gameboard from './Gameboard';
 import * as Game from '../models/Game';
 import HeldPiece from './HeldPiece';
@@ -34,6 +34,7 @@ export type Controller = {
 type Props = {
     keyboardControls?: KeyboardMap;
     children: RenderFn;
+    mission: Mission;
 };
 
 //const defaultKeyboardMap: KeyboardMap = {
@@ -52,15 +53,13 @@ type Props = {
 //};
 
 // https://harddrop.com/wiki/Tetris_Worlds#Gravity
-export const testMission: Mission = {
-    // 20 x 10 2d array of nulls
-    startingPosition: Array.from({ length: 20 }, () => Array(10).fill(null)),
-    clears: [],
-    pieces: ['O', 'I', 'S']
-}
 export default function Tetris(props: Props): JSX.Element {
-    const [mission, setMission] = useState<Mission>(testMission);
-    const [game, dispatch] = React.useReducer(Game.update, Game.init(mission));
+    const [game, dispatch] = React.useReducer(Game.update, Game.init(props.mission));
+    useEffect(() => {
+        if (props.mission.clears.length === 0) return;
+        dispatch({ ...Game.init(props.mission), state: 'PLAYING' });
+    }
+    , [props.mission]);
     const keyboardMap = props.keyboardControls!;
     useKeyboardControls(keyboardMap, dispatch);
     const level = Game.getLevel(game);
@@ -97,7 +96,7 @@ export default function Tetris(props: Props): JSX.Element {
     );
 
     return (
-        mission ? 
+        props.mission ? 
         <Context.Provider value={game}>
             {props.children({
                 HeldPiece,

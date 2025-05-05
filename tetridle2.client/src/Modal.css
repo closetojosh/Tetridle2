@@ -1,0 +1,191 @@
+﻿/* src/Modal.css - Dark Theme */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    /* Slightly darker overlay for better contrast */
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.modal-content {
+    /* Dark background for the modal */
+    background-color: #2d2d2d;
+    /* Light default text color */
+    color: #e0e0e0;
+    padding: 30px 40px;
+    border-radius: 12px;
+    /* Adjusted shadow for dark background */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+    position: relative;
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    /* Keep animation */
+    animation: fadeInScale 0.3s ease-out;
+    /* Add a subtle border */
+    border: 1px solid #444;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+.modal-close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    line-height: 1;
+    /* Lighter color for dark background */
+    color: #aaa;
+    cursor: pointer;
+    padding: 5px;
+    transition: color 0.2s ease;
+}
+
+    .modal-close-button:hover {
+        /* White on hover */
+        color: #ffffff;
+    }
+
+.modal-title {
+    font-size: 3rem;
+    font-weight: bold;
+    /* Bright white title */
+    color: #ffffff;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-family: 'Arial', sans-serif;
+    letter-spacing: 1px;
+}
+
+.modal-play-button {
+    /* Keep the green button for accent */
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 12px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-bottom: 2rem;
+}
+
+    .modal-play-button:hover {
+        background-color: #45a049;
+    }
+
+    .modal-play-button:active {
+        transform: scale(0.98);
+    }
+
+.modal-checklist {
+    margin-top: 20px;
+    padding: 15px;
+    /* Slightly lighter dark background for contrast */
+    background-color: #3a3a3a;
+    border-radius: 8px;
+    /* Lighter border */
+    border: 1px solid #555;
+}
+
+.modal-checklist-title {
+    font-size: 1.4rem;
+    /* Lighter grey title */
+    color: #d0d0d0;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    text-align: left;
+    /* Lighter border */
+    border-bottom: 1px solid #555;
+    padding-bottom: 0.5rem;
+}
+
+.modal-checklist-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.modal-checklist-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+    /* Readable light grey for items */
+    color: #c5c5c5;
+}
+
+    .modal-checklist-item input[type="checkbox"] {
+        margin-right: 6px;
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        /* Keep accent color */
+        accent-color: #4CAF50;
+        /* Add a border to make the box visible when unchecked */
+        border: 1px solid #777;
+        background-color: #555; /* Make background visible */
+        border-radius: 3px; /* Optional: Slightly round the checkbox */
+        vertical-align: middle; /* Align better with text */
+        appearance: none; /* Need this to style the checkmark container */
+        position: relative; /* For custom checkmark */
+    }
+
+        /* Style checked state */
+        .modal-checklist-item input[type="checkbox"]:checked {
+            background-color: #4CAF50; /* Use accent color for background when checked */
+            border-color: #4CAF50;
+        }
+
+            /* Optional: Add a custom checkmark using pseudo-element */
+            .modal-checklist-item input[type="checkbox"]:checked::before {
+                content: '✔'; /* Checkmark character */
+                position: absolute;
+                top: -2px; /* Adjust positioning */
+                left: 2px; /* Adjust positioning */
+                font-size: 14px;
+                color: white; /* Checkmark color */
+                line-height: 1;
+            }
+
+
+    .modal-checklist-item label {
+        cursor: pointer;
+        flex-grow: 1;
+        /* Make label color slightly brighter for emphasis */
+        color: #d5d5d5;
+        vertical-align: middle; /* Align better with checkbox */
+        padding-left: 5px; /* Space after checkbox */
+    }
+
+.modal-checklist-item-empty {
+    font-style: italic;
+    /* Adjust color for readability on dark background */
+    color: #999;
+    text-align: center;
+    padding: 10px 0;
+}

@@ -22,7 +22,6 @@ export const useKeyboardControls = (
         function onEvent(event: KeyboardEvent) {
             if (event.repeat) return;
             if (event.type == "keyup") {
-                console.log('up');
                 if (currentAction.current == keyboardMap.get(event.key)) {
                     if(dasTimer.current) clearTimeout(dasTimer.current);
                     if(arrTimer.current) clearInterval(arrTimer.current);

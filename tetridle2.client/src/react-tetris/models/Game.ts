@@ -29,6 +29,7 @@ export type Mission = {
     startingPosition: Matrix;
     clears: Clear[];
     pieces: Piece[];
+    isReal: boolean;
 }
 export type Game = {
     state: State;
@@ -59,14 +60,15 @@ export type Action =
     | 'FLIP_CLOCKWISE'
     | 'FLIP_COUNTERCLOCKWISE'
     | 'FLIP_180'
-    | 'RESTART';
+    | 'RESTART'
+    | Game;
 
 export const init = (mission: Mission): Game => {
     //Make API call to get the mission
     const queue = PieceQueue.create(mission);
     const next = PieceQueue.getNext(queue);
     return {
-        state: 'PLAYING',
+        state: 'PAUSED',
         points: 0,
         lines: 0,
         matrix: buildMatrix(),
@@ -163,8 +165,8 @@ export const update = (game: Game, action: Action): Game => {
             };
         }
         default: {
-            const exhaustiveCheck: never = action;
-            throw new Error(`Unhandled action: ${exhaustiveCheck}`);
+            //Passed Game in
+            return action;
         }
     }
 };
