@@ -16,6 +16,7 @@ import {
 } from './Matrix';
 import Constants from '../constants';
 import * as PieceQueue from '../modules/piece-queue';
+import Settings from '../settings';
 export type State = 'PAUSED' | 'PLAYING' | 'LOST';
 
 type HeldPiece = { available: boolean; piece: Piece };
@@ -29,6 +30,7 @@ export type Game = {
     points: number;
     lines: number;
     dasTimers: { left: number; right: number };
+    bottomOutTicks: number;
 };
 
 
@@ -72,11 +74,22 @@ export const update = (game: Game, action: Action): Game => {
             return lockInPiece({ ...game, piece });
         }
         case 'TICK':
+        {
+            if (game.state !== 'PLAYING') return game;
+            const updated = applyMove(moveDown, game);
+            if (game.piece === updated.piece) {
+                console.log('same')
+                return incrementLockInTicks(game, 10000);
+            } else {
+                return updated;
+            }
+        }
         case 'MOVE_DOWN': {
             if (game.state !== 'PLAYING') return game;
             const updated = applyMove(moveDown, game);
             if (game.piece === updated.piece) {
-                return lockInPiece(updated);
+                console.log('same')
+                return incrementLockInTicks(game, 10000 / (1000 / Settings.SOFTDROP_DELAY));
             } else {
                 return updated;
             }
@@ -127,7 +140,15 @@ export const update = (game: Game, action: Action): Game => {
         }
     }
 };
-
+const incrementLockInTicks = (game: Game, increment: number): Game => {
+if (game.state !== 'PLAYING') return game;
+    const ticks = game.bottomOutTicks + increment;
+    const newGame = { ...game, bottomOutTicks: ticks };
+    if (ticks > Settings.BOTTOMOUT_TIME) {
+        return lockInPiece(newGame);
+    }
+    return newGame;
+}
 const lockInPiece = (game: Game): Game => {
     const [matrix, linesCleared] = setPiece(game.matrix, game.piece);
     const next = PieceQueue.getNext(game.queue);
@@ -142,7 +163,8 @@ const lockInPiece = (game: Game): Game => {
             : undefined,
         queue: next.queue,
         lines: game.lines + linesCleared,
-        points: game.points + addScore(linesCleared)
+        points: game.points + addScore(linesCleared),
+        bottomOutTicks: 0
     };
 };
 
@@ -187,7 +209,8 @@ export const init = (): Game => {
         piece: initializePiece(next.piece),
         heldPiece: undefined,
         queue: next.queue,
-        dasTimers: { left: -1, right: -1 }
+        dasTimers: { left: -1, right: -1 },
+        bottomOutTicks: 0
     };
 };
 

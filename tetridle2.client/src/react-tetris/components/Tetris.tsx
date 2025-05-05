@@ -51,9 +51,6 @@ type Props = {
 //};
 
 // https://harddrop.com/wiki/Tetris_Worlds#Gravity
-const tickSeconds = (level: number) =>
-    (0.8 - (level - 1) * 0.007) ** (level - 1);
-
 export default function Tetris(props: Props): JSX.Element {
     const [game, dispatch] = React.useReducer(Game.update, Game.init());
     const keyboardMap = props.keyboardControls!;
@@ -67,7 +64,7 @@ export default function Tetris(props: Props): JSX.Element {
                 () => {
                     dispatch('TICK');
                 },
-                tickSeconds(level) * 1000
+                1 * 1000
             );
         }
         return () => {

@@ -5,4 +5,4 @@ export default {
   BLOCK_WIDTH: 4,
   BLOCK_HEIGHT: 4,
   ROTATION_COUNT: 4
-};
+} as const;

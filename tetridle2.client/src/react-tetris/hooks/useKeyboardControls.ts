@@ -4,7 +4,7 @@ import { Action } from '../models/Game';
 
 export type KeyboardMap = Map<string, Action>;
 const ARR = 0;
-const SOFTDROP_SPEED = 0;
+const SOFTDROP_SPEED = 20;
 const DAS = 100;
 export const useKeyboardControls = (
     keyboardMap: KeyboardMap,
@@ -33,8 +33,6 @@ export const useKeyboardControls = (
                 }
             }
             else {
-                console.log('down')
-
                 if (keyboardMap.get(event.key) == 'MOVE_LEFT' || keyboardMap.get(event.key) == 'MOVE_RIGHT') {
                     if (dasTimer.current) clearTimeout(dasTimer.current);
                     if (arrTimer.current) clearInterval(arrTimer.current);
