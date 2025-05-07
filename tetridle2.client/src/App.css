@@ -23,7 +23,11 @@
 .piece-i {
     background-color: #ec858b;
 }
-
+.flex-col-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .piece-j {
     background-color: #f1b598;
 }
@@ -31,7 +35,9 @@
 .piece-l {
     background-color: #f8efae;
 }
-
+.game-checklist {
+  width: 100%;
+}
 .piece-o {
     background-color: #b5a677;
 }

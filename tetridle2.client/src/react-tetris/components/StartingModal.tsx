@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import Portal from './Portal';
 import './Modal.css'; // CSS styles remain the same
+import { Checklist } from './Checklist';
 
 // Define the interface for the component's props
 interface ModalProps {
@@ -58,26 +59,10 @@ const StartingModal: React.FC<ModalProps> = ({ isOpen, onClose, missions = [] })
             >
                 <div className="modal-content" onClick={handleContentClick}>
                     <h1 className="modal-title">Tetridle</h1>
-
                     <button className="modal-play-button" onClick={onClose}>
                         Play!
                     </button>
-
-                    <div className="modal-checklist">
-                        <h2 className="modal-checklist-title">Today's missions</h2>
-                        <ul className="modal-checklist-list">
-                            {missions.map((mission: string, index: number) => ( // Explicit types for map args
-                                <li key={index} className="modal-checklist-item">
-                                    {/* Use template literals for unique IDs */}
-                                    <input type="checkbox" id={`mission-${index}`} disabled={true} />
-                                    <label htmlFor={`mission-${index}`}>{mission}</label>
-                                </li>
-                            ))}
-                            {missions.length === 0 && (
-                                <li className="modal-checklist-item-empty">No missions today!</li>
-                            )}
-                        </ul>
-                    </div>
+                    <Checklist missions={missions} />
                 </div>
             </div>
         </Portal>
