@@ -6,16 +6,19 @@ import PieceQueue from './PieceQueue';
 import { Context } from '../context';
 import { KeyboardMap, useKeyboardControls } from '../hooks/useKeyboardControls';
 import { Mission } from '../models/Game';
+import { Checklist } from './Checklist';
 
 export type RenderFn = (params: {
     HeldPiece: React.ComponentType;
     Gameboard: React.ComponentType;
     PieceQueue: React.ComponentType;
+    Checklist: React.ComponentType<{ missions: string[], className?: string }> ;
     points: number;
     linesCleared: number;
     level: number;
     state: Game.State;
     controller: Controller;
+    isMissionCompleted: boolean[];
 }) => React.ReactElement;
 
 export type Controller = {
@@ -102,11 +105,13 @@ export default function Tetris(props: Props): JSX.Element {
                 HeldPiece,
                 Gameboard,
                 PieceQueue,
+                Checklist,
                 points: game.points,
                 linesCleared: game.lines,
                 state: game.state,
                 level,
-                controller
+                controller,
+                isMissionCompleted: game.isMissionCompleted
             })}
         </Context.Provider>
         :

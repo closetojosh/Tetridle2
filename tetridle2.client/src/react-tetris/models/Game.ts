@@ -21,7 +21,7 @@ export type State = 'PAUSED' | 'PLAYING' | 'LOST';
 
 type HeldPiece = { available: boolean; piece: Piece };
 export type Clear = {
-    lines: 1 | 2 | 3 | 4;
+    lines: number;
     isTSpin: boolean;
     isPerfectClear: boolean;
 }
@@ -29,7 +29,6 @@ export type Mission = {
     startingPosition: Matrix;
     clears: Clear[];
     pieces: Piece[];
-    isReal: boolean;
 }
 export type Game = {
     state: State;
@@ -42,6 +41,7 @@ export type Game = {
     dasTimers: { left: number; right: number };
     bottomOutTicks: number;
     mission: Mission;
+    isMissionCompleted: boolean[];
 };
 
 
@@ -77,7 +77,8 @@ export const init = (mission: Mission): Game => {
         queue: next.queue,
         dasTimers: { left: -1, right: -1 },
         bottomOutTicks: 0,
-        mission: mission
+        mission: mission,
+        isMissionCompleted: mission.clears.map(() => false)
     };
 };
 
@@ -180,10 +181,13 @@ if (game.state !== 'PLAYING') return game;
     return newGame;
 }
 const lockInPiece = (game: Game): Game => {
-    const [matrix, linesCleared] = setPiece(game.matrix, game.piece);
+    const [matrix, clear] = setPiece(game.matrix, game.piece);
     const next = PieceQueue.getNext(game.queue);
     const piece = initializePiece(next.piece);
     const isLost = next.piece == 'E' || !isEmptyPosition(matrix, piece);
+    const newMissionClears = game.mission.clears.map((missionClear) => ifClearFits(clear, missionClear));
+    const finalMissionClears = newMissionClears.map((missionClear, i) => missionClear || game.isMissionCompleted[i]);
+    console.log(finalMissionClears)
     if (isLost) {
         return init(game.mission);
     }
@@ -195,12 +199,18 @@ const lockInPiece = (game: Game): Game => {
             ? { ...game.heldPiece, available: true }
             : undefined,
         queue: next.queue,
-        lines: game.lines + linesCleared,
-        points: game.points + addScore(linesCleared),
-        bottomOutTicks: 0
+        lines: game.lines + clear.lines,
+        points: game.points + addScore(clear.lines),
+        bottomOutTicks: 0,
+        isMissionCompleted: finalMissionClears
     };
 };
-
+const ifClearFits = (clear: Clear, missionClear: Clear) => {
+    if (missionClear.isPerfectClear && !clear.isPerfectClear) return false;
+    if (missionClear.isTSpin && !clear.isTSpin) return false;
+    if (missionClear.lines !== clear.lines) return false;
+    return true;
+}
 const pointsPerLine = 100;
 const addScore = (additionalLines: number) => {
     // what's this called?

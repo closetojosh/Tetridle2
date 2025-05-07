@@ -21,9 +21,9 @@ export default function CountdownOverlay(props: { countdownEndCallback: () => un
         <div className="container" >
             {
                 count !== null && count > 0 && (
-                    <div className="overlay" >
-                        {props.isEnabled ? <span className="count-text" > {count} </span> : <></>}
-                     </div>
+                <div className="overlay" >
+                    {props.isEnabled ? <span className="count-text" > {count} </span> : <></>}
+                </div>
               )
             }
        </div>

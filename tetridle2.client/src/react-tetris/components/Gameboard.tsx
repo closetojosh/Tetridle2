@@ -17,7 +17,6 @@ export default function GameboardView(): JSX.Element {
             }`;
             return <td key={j} className={classString} />;
           });
-
           return <tr key={i}>{blocksInRow}</tr>;
         })}
       </tbody>

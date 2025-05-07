@@ -4,7 +4,6 @@ import { Action, Clear, Mission } from "./react-tetris/models/Game";
 import StartingModal from "./react-tetris/components/StartingModal";
 import { useState } from "react";
 import CountdownOverlay from "./react-tetris/components/CountdownOverlay";
-import { Checklist } from "./react-tetris/components/Checklist";
 const getClearString = (clear: Clear) => {
     const clearNames = ['Single', 'Double', 'Triple', 'Quad'];
     return `Clear a ${clear.isTSpin ? "T-Spin " : ""} ${clearNames[clear.lines - 1]} ${clear.isPerfectClear ? "with a Perfect Clear" : ""}`
@@ -13,7 +12,7 @@ const emptyMission: Mission = {
     // 20 x 10 2d array of nulls
     startingPosition: Array.from({ length: 20 }, () => Array(10).fill(null)),
     clears: [],
-    pieces: []
+    pieces: [],
 }
 const testMission: Mission = {
     startingPosition: [
@@ -83,6 +82,7 @@ const App = () => {
                     HeldPiece,
                     Gameboard,
                     PieceQueue,
+                    Checklist
                 }) => (
                     <div className="flex-col-center">
                         <div className="flex-col-center">

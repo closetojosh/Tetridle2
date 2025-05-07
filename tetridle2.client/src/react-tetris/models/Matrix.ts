@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import Constants from '../constants';
 import { KickOffsets, getKickData, tk } from '../srsKicks';
+import { Clear } from './Game';
 import { Piece, Rotation, getBlocks, isRotation } from './Piece';
 
 const { GAME_HEIGHT, GAME_WIDTH } = Constants;
@@ -77,28 +78,54 @@ export type PositionedPiece = {
 export function setPiece(
   matrix: Matrix,
   positionedPiece: PositionedPiece
-): [Matrix, number] {
+): [Matrix, Clear] {
   const _matrix = addPieceToBoard(matrix, positionedPiece);
-  // TODO: purify
-  const linesCleared = clearFullLines(_matrix);
-  return [_matrix, linesCleared];
+    // TODO: purify
+    const clear = clearFullLines(_matrix, positionedPiece.piece, positionedPiece.position);
+    return [_matrix, clear];
 }
 
-function clearFullLines(matrix: Matrix): number {
-  let linesCleared = 0;
-  for (let y = 0; y < matrix.length; y++) {
-    // it's a full line
-    if (every(matrix[y]!)) {
-      // so rip it out
-      matrix.splice(y, 1);
-      matrix.unshift(buildGameRow());
-      linesCleared += 1;
+function clearFullLines(matrix: Matrix, currentPiece: Piece, position: Coords): Clear {
+    let lines = 0;
+    for (let y = 0; y < matrix.length; y++) {
+        if (every(matrix[y]!)) {
+            matrix.splice(y, 1);
+            matrix.unshift(buildGameRow());
+            lines += 1;
+        }
     }
-  }
 
-  return linesCleared;
+    const isPerfectClear = matrix.every(row => row.every(cell => cell === null));
+
+    const isTSpin = detectTSpin(matrix, currentPiece, position);
+
+    return {
+        lines,
+        isPerfectClear,
+        isTSpin,
+    };
 }
 
+function detectTSpin(matrix: Matrix, piece: Piece, position: Coords): boolean {
+    if (piece !== 'T') return false;
+
+    const { x, y } = position;
+    const corners = [
+        [y - 1, x - 1],
+        [y - 1, x + 1],
+        [y + 1, x - 1],
+        [y + 1, x + 1],
+    ];
+
+    let occupiedCorners = 0;
+    for (const [cy, cx] of corners) {
+        if (matrix[cy]?.[cx]) {
+            occupiedCorners++;
+        }
+    }
+
+    return occupiedCorners >= 3;
+}
 function every<T>(list: T[]): boolean {
   for (let i = 0; i < list.length; i++) {
     if (!list[i]) return false;

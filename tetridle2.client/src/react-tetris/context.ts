@@ -19,6 +19,7 @@ const defaultValue = {
     queue: {},
     dasTimers: { left: -1, right: -1 },
     bottomOutTicks: 0,
-    mission: {}
+    mission: {},
+    isMissionCompleted: [] as boolean[]
 } as Game;
 export const Context = React.createContext<Game>(defaultValue);
