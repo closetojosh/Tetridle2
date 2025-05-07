@@ -71,7 +71,7 @@ export const init = (mission: Mission): Game => {
         state: 'PLAYING',
         points: 0,
         lines: 0,
-        matrix: buildMatrix(),
+        matrix: mission.startingPosition ?? buildMatrix(),
         piece: initializePiece(next.piece),
         heldPiece: undefined,
         queue: next.queue,

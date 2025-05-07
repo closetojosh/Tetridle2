@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Gameboard from './Gameboard';
 import * as Game from '../models/Game';
 import HeldPiece from './HeldPiece';
@@ -108,8 +108,8 @@ export default function Tetris(props: Props): JSX.Element {
                 level,
                 controller
             })}
-            </Context.Provider>
-            :
+        </Context.Provider>
+        :
         <></>
     );
 }
