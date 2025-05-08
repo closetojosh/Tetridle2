@@ -53,7 +53,9 @@
 .piece-z {
     background-color: #e3be58;
 }
-
+.piece-grey{
+    background-color: #999;
+}
 .piece-preview {
     background-color: #666;
 }

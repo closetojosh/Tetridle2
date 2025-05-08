@@ -163,7 +163,6 @@
 
             /* Optional: Add a custom checkmark using pseudo-element */
             .modal-checklist-item input[type="checkbox"]:checked::before {
-                content: '✔'; /* Checkmark character */
                 position: absolute;
                 top: -2px; /* Adjust positioning */
                 left: 2px; /* Adjust positioning */

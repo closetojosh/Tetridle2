@@ -4,6 +4,7 @@ import { Action, Clear, Mission } from "./react-tetris/models/Game";
 import StartingModal from "./react-tetris/components/StartingModal";
 import { useState } from "react";
 import CountdownOverlay from "./react-tetris/components/CountdownOverlay";
+import WinnerModal from "./react-tetris/components/WinnerModal";
 const getClearString = (clear: Clear) => {
     const clearNames = ['Single', 'Double', 'Triple', 'Quad'];
     return `Clear a ${clear.isTSpin ? "T-Spin " : ""} ${clearNames[clear.lines - 1]} ${clear.isPerfectClear ? "with a Perfect Clear" : ""}`
@@ -30,24 +31,25 @@ const testMission: Mission = {
         [null, null, null, null, null, null, null, null, null, null],
         [null, null, null, null, null, null, null, null, null, null],
         [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, 'O' , 'O' , null, null, null, null],
-        [null, null, null, null, 'O' , 'O' , null, null, null, null]
+        [null, null, null, null, 'grey', 'grey', 'grey', 'grey', 'grey', 'grey'],
+        [null, null, null, null, 'grey', 'grey', 'grey', 'grey', 'grey', 'grey'],
+        [null, null, null, null, 'grey', 'grey', 'grey', 'grey', 'grey', 'grey'],
+        [null, null, null, 'L' , 'grey', 'grey', 'grey', 'grey', 'grey', 'grey'],
+        [null, null, null, 'L' , 'grey', 'grey', 'grey', 'grey', 'grey', 'grey'],
+        [null, null, 'L', 'L'  , 'grey', 'grey', 'grey', 'grey', 'grey', 'grey'],
     ],
-    pieces: ['I', 'J', 'L', 'O', 'S', 'T'],
+    pieces: ['L', 'J', 'L', 'J', 'T', 'T'],
     clears: [
-        { lines: 1, isPerfectClear: true, isTSpin: true }, 
-        { lines: 1, isPerfectClear: false, isTSpin: false }
+        { lines: 2, isPerfectClear: false, isTSpin: true }, 
+        { lines: 2, isPerfectClear: false, isTSpin: true }
     ]
 }
 const App = () => {
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
+    const [isStartingModalOpen, setIsStartingModalOpen] = useState<boolean>(true);
+    const [isWinnerModelOpen, setIsWinnerModelOpen] = useState<boolean>(false);
     const [isCountdownActive, setIsCountdownActive] = useState<boolean>(false);
     const closeModal = () => {
-        setIsModalOpen(false);
+        setIsStartingModalOpen(false);
         setIsCountdownActive(true);
     };
     const dailyMissions = testMission.clears.map(mission => getClearString(mission));
@@ -57,9 +59,12 @@ const App = () => {
         <div className="app">
             <CountdownOverlay countdownEndCallback={countdownEndCallback} isEnabled={isCountdownActive} />
             <StartingModal
-                isOpen={isModalOpen}
+                isOpen={isStartingModalOpen}
                 onClose={closeModal}
                 missions={dailyMissions}
+            />
+            <WinnerModal
+                isOpen={isWinnerModelOpen}
             />
             <h1 className="title">Tetridle</h1>
             <Tetris keyboardControls={new Map<string, Action>([

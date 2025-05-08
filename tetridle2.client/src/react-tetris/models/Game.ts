@@ -109,7 +109,6 @@ export const update = (game: Game, action: Action): Game => {
             if (game.state !== 'PLAYING') return game;
             const updated = applyMove(moveDown, game);
             if (game.piece === updated.piece) {
-                console.log('same')
                 return incrementLockInTicks(game, 10000);
             } else {
                 return updated;
@@ -119,7 +118,6 @@ export const update = (game: Game, action: Action): Game => {
             if (game.state !== 'PLAYING') return game;
             const updated = applyMove(moveDown, game);
             if (game.piece === updated.piece) {
-                console.log('same')
                 return incrementLockInTicks(game, 10000 / (1000 / Settings.SOFTDROP_DELAY));
             } else {
                 return updated;
@@ -184,10 +182,11 @@ const lockInPiece = (game: Game): Game => {
     const [matrix, clear] = setPiece(game.matrix, game.piece);
     const next = PieceQueue.getNext(game.queue);
     const piece = initializePiece(next.piece);
-    const isLost = next.piece == 'E' || !isEmptyPosition(matrix, piece);
-    const newMissionClears = game.mission.clears.map((missionClear) => ifClearFits(clear, missionClear));
+    const newMissionClear = game.mission.clears.findIndex((missionClear, index) => ifClearFits(clear, missionClear) && !game.isMissionCompleted[index]);
+    const newMissionClears = newMissionClear === -1 ? new Array(game.mission.clears.length).fill(false) : game.mission.clears.map((_, i) => i == newMissionClear);
     const finalMissionClears = newMissionClears.map((missionClear, i) => missionClear || game.isMissionCompleted[i]);
-    console.log(finalMissionClears)
+    const isWon = finalMissionClears.every((missionClear) => missionClear);
+    const isLost = !isWon &&next.piece == 'E' || !isEmptyPosition(matrix, piece);
     if (isLost) {
         return init(game.mission);
     }

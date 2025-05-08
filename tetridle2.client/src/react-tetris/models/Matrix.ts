@@ -16,7 +16,7 @@ const serializeCoords = ({ x, y }: Coords): string => `${x},${y}`;
 
 // Two-dimensional array
 // First dimension is height. Second is width.
-export type Matrix = Array<Array<Piece | 'ghost' | null>>;
+export type Matrix = Array<Array<Piece | 'ghost' | 'grey' | null>>;
 
 export function buildMatrix(): Matrix {
   const matrix = new Array(GAME_HEIGHT);
@@ -86,6 +86,10 @@ export function setPiece(
 }
 
 function clearFullLines(matrix: Matrix, currentPiece: Piece, position: Coords): Clear {
+    const isPerfectClear = matrix.every(row => row.every(cell => cell === null));
+
+    const isTSpin = detectTSpin(matrix, currentPiece, position);
+
     let lines = 0;
     for (let y = 0; y < matrix.length; y++) {
         if (every(matrix[y]!)) {
@@ -94,11 +98,6 @@ function clearFullLines(matrix: Matrix, currentPiece: Piece, position: Coords): 
             lines += 1;
         }
     }
-
-    const isPerfectClear = matrix.every(row => row.every(cell => cell === null));
-
-    const isTSpin = detectTSpin(matrix, currentPiece, position);
-
     return {
         lines,
         isPerfectClear,
@@ -108,13 +107,13 @@ function clearFullLines(matrix: Matrix, currentPiece: Piece, position: Coords): 
 
 function detectTSpin(matrix: Matrix, piece: Piece, position: Coords): boolean {
     if (piece !== 'T') return false;
-
+    console.log(position);
     const { x, y } = position;
     const corners = [
-        [y - 1, x - 1],
-        [y - 1, x + 1],
-        [y + 1, x - 1],
-        [y + 1, x + 1],
+        [y, x],
+        [y + 2, x ],
+        [y + 2, x + 2],
+        [y, x + 2],
     ];
 
     let occupiedCorners = 0;
@@ -165,9 +164,6 @@ export function isEmptyPosition(
   return true;
 }
 
-function assert(value: unknown): asserts value {
-  if (!value) throw new Error('assertion failed');
-}
 function tryRotation(
     gameboard: Matrix,
     currentPiece: PositionedPiece,

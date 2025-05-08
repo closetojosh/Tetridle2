@@ -207,7 +207,7 @@ export const getBlocks = (piece: Piece): number[][][] => {
   }
 };
 
-export const getClassName = (piece: Piece | 'ghost'): string => {
+export const getClassName = (piece: Piece | 'ghost' | 'grey'): string => {
   switch (piece) {
     case 'I':
       return 'piece-i';
@@ -223,6 +223,8 @@ export const getClassName = (piece: Piece | 'ghost'): string => {
       return 'piece-t';
     case 'Z':
       return 'piece-z';
+    case 'grey':
+        return 'piece-grey';
     case 'ghost':
       return 'piece-preview';
     default: {
