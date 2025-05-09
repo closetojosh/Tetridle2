@@ -33,7 +33,7 @@
     border: 1px solid #444;
 }
 .win-modal{
-
+    height: 220px;
 }
 @keyframes fadeInScale {
     from {
@@ -78,7 +78,6 @@
     font-family: 'Arial', sans-serif;
     letter-spacing: 1px;
 }
-
 .modal-play-button {
     /* Keep the green button for accent */
     background-color: #4CAF50;

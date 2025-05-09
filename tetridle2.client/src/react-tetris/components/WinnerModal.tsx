@@ -5,10 +5,10 @@ import './Modal.css'; // We'll add toast styles here later
 interface WinnerModalProps {
     isOpen: boolean;
     onClose: () => void;
-    scoreString: string; // The string to be copied to the clipboard
+    score: number; // The string to be copied to the clipboard
 }
 
-const WinnerModal: React.FC<WinnerModalProps> = ({ isOpen, onClose, scoreString }) => {
+const WinnerModal: React.FC<WinnerModalProps> = ({ isOpen, onClose, score }) => {
     const [showToast, setShowToast] = useState<boolean>(false);
     const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null); // For managing the toast timeout
 
@@ -39,7 +39,7 @@ const WinnerModal: React.FC<WinnerModalProps> = ({ isOpen, onClose, scoreString 
 
     const handleShareScore = async () => {
         try {
-            await navigator.clipboard.writeText(scoreString);
+            await navigator.clipboard.writeText(`I beat today's Tetridle in ${score} seconds! Try your hand at tetrid.le'`);
             setShowToast(true);
 
             // Clear any existing timeout
@@ -78,7 +78,7 @@ const WinnerModal: React.FC<WinnerModalProps> = ({ isOpen, onClose, scoreString 
                     </button>
 
                     <h1 className="modal-title">You won!</h1>
-
+                    <h3>and it only took you {score} seconds</h3>
                     <button
                         className="modal-play-button" // Reusing green button style
                         onClick={handleShareScore}
