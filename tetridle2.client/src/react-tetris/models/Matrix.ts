@@ -107,7 +107,6 @@ function clearFullLines(matrix: Matrix, currentPiece: Piece, position: Coords): 
 
 function detectTSpin(matrix: Matrix, piece: Piece, position: Coords): boolean {
     if (piece !== 'T') return false;
-    console.log(position);
     const { x, y } = position;
     const corners = [
         [y, x],

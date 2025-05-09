@@ -4,7 +4,6 @@ import { Context } from "../context";
 export const Checklist = (props: { missions: string[], className?: string }) => {
     const { isMissionCompleted } = React.useContext(Context);
     const completion = isMissionCompleted.length ? isMissionCompleted : new Array(props.missions.length).fill(false); // Default to empty array if undefined
-    console.log(completion)
     return (
         <div className={"modal-checklist " + props.className}>
             <h2 className="modal-checklist-title">Today's mission</h2>

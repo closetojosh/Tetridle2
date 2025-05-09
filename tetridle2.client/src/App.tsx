@@ -48,6 +48,11 @@ const App = () => {
     const [isStartingModalOpen, setIsStartingModalOpen] = useState<boolean>(true);
     const [isWinnerModelOpen, setIsWinnerModelOpen] = useState<boolean>(false);
     const [isCountdownActive, setIsCountdownActive] = useState<boolean>(false);
+    const [scoreString, setScoreString] = useState<string>("");
+    const handleGameWin = (timeTaken: number) => {
+        setIsWinnerModelOpen(true);
+        setScoreString(`I scored ${timeTaken} points! Can you beat me?`);
+    };
     const closeModal = () => {
         setIsStartingModalOpen(false);
         setIsCountdownActive(true);
@@ -65,6 +70,8 @@ const App = () => {
             />
             <WinnerModal
                 isOpen={isWinnerModelOpen}
+                onClose={() => setIsWinnerModelOpen(false)}
+                scoreString={scoreString}
             />
             <h1 className="title">Tetridle</h1>
             <Tetris keyboardControls={new Map<string, Action>([
@@ -82,6 +89,7 @@ const App = () => {
                 ["Shift", 'FLIP_180']
             ])}
                 mission={activeMission}
+                handleGameWin={handleGameWin}
             >
                 {({
                     HeldPiece,

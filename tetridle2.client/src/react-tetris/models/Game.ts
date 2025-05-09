@@ -42,6 +42,8 @@ export type Game = {
     bottomOutTicks: number;
     mission: Mission;
     isMissionCompleted: boolean[];
+    ticks: number;
+    handleGameWin?: (timeTaken: number) => void
 };
 
 
@@ -63,7 +65,7 @@ export type Action =
     | 'RESTART'
     | Game;
 
-export const init = (mission: Mission): Game => {
+export const init = (mission: Mission, handleGameWin?: (timeTaken: number) => void): Game => {
     //Make API call to get the mission
     const queue = PieceQueue.create(mission);
     const next = PieceQueue.getNext(queue);
@@ -78,7 +80,9 @@ export const init = (mission: Mission): Game => {
         dasTimers: { left: -1, right: -1 },
         bottomOutTicks: 0,
         mission: mission,
-        isMissionCompleted: mission.clears.map(() => false)
+        ticks: 0,
+        isMissionCompleted: mission.clears.map(() => false),
+        handleGameWin: handleGameWin
     };
 };
 
@@ -106,12 +110,13 @@ export const update = (game: Game, action: Action): Game => {
         }
         case 'TICK':
         {
-            if (game.state !== 'PLAYING') return game;
-            const updated = applyMove(moveDown, game);
+            const tickUpdatedGame = {...game, ticks: game.ticks + 1};
+            if (game.state !== 'PLAYING') return tickUpdatedGame;
+            const updated = applyMove(moveDown, tickUpdatedGame);
             if (game.piece === updated.piece) {
-                return incrementLockInTicks(game, 10000);
+                return incrementLockInTicks(tickUpdatedGame, 10000);
             } else {
-                return updated;
+                return tickUpdatedGame;
             }
         }
         case 'MOVE_DOWN': {
@@ -186,7 +191,8 @@ const lockInPiece = (game: Game): Game => {
     const newMissionClears = newMissionClear === -1 ? new Array(game.mission.clears.length).fill(false) : game.mission.clears.map((_, i) => i == newMissionClear);
     const finalMissionClears = newMissionClears.map((missionClear, i) => missionClear || game.isMissionCompleted[i]);
     const isWon = finalMissionClears.every((missionClear) => missionClear);
-    const isLost = !isWon &&next.piece == 'E' || !isEmptyPosition(matrix, piece);
+    if (isWon) game.handleGameWin?.(game.ticks)
+    const isLost = !isWon && (next.piece == 'E' || !isEmptyPosition(matrix, piece));
     if (isLost) {
         return init(game.mission);
     }
@@ -201,7 +207,8 @@ const lockInPiece = (game: Game): Game => {
         lines: game.lines + clear.lines,
         points: game.points + addScore(clear.lines),
         bottomOutTicks: 0,
-        isMissionCompleted: finalMissionClears
+        isMissionCompleted: finalMissionClears,
+        state: isWon ? 'PAUSED' : game.state,
     };
 };
 const ifClearFits = (clear: Clear, missionClear: Clear) => {
