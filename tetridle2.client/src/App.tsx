@@ -5,6 +5,7 @@ import StartingModal from "./react-tetris/components/StartingModal";
 import { useState } from "react";
 import CountdownOverlay from "./react-tetris/components/CountdownOverlay";
 import WinnerModal from "./react-tetris/components/WinnerModal";
+import confetti from 'canvas-confetti';
 const getClearString = (clear: Clear) => {
     const clearNames = ['Single', 'Double', 'Triple', 'Quad'];
     return `Clear a ${clear.isTSpin ? "T-Spin " : ""} ${clearNames[clear.lines - 1]} ${clear.isPerfectClear ? "with a Perfect Clear" : ""}`
@@ -52,6 +53,7 @@ const App = () => {
     const handleGameWin = (timeTaken: number) => {
         setIsWinnerModelOpen(true);
         setScoreString(`I scored ${timeTaken} points! Can you beat me?`);
+        confetti({spread: 90});
     };
     const closeModal = () => {
         setIsStartingModalOpen(false);

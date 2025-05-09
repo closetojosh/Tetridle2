@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "canvas-confetti": "^1.9.3",
     "keymaster": "^1.6.2"
   },
   "devDependencies": {

@@ -1,8 +1,8 @@
 import Constants from '../constants';
 
 export const pieces = <const>['I', 'J', 'L', 'O', 'S', 'T', 'Z', 'E'];
-export type Piece = (typeof pieces)[number];
 export type Rotation = 0 | 1 | 2 | 3;
+export type Piece = (typeof pieces)[number];
 
 export const isRotation = (num: number): num is Rotation =>
   num >= 0 && num < Constants.ROTATION_COUNT;

@@ -42,7 +42,7 @@ const StartingModal: React.FC<ModalProps> = ({ isOpen, onClose, missions = [] })
     };
 
     // Type the event for the overlay click handler
-    const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleOverlayClick = () => {
         // Optional: Check if the click was directly on the overlay, not the content
         // if (e.target === e.currentTarget) {
         onClose();

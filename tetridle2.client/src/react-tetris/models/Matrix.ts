@@ -2,7 +2,7 @@
 import Constants from '../constants';
 import { KickOffsets, getKickData, tk } from '../srsKicks';
 import { Clear } from './Game';
-import { Piece, Rotation, getBlocks, isRotation } from './Piece';
+import { Piece, Rotation, getBlocks } from './Piece';
 
 const { GAME_HEIGHT, GAME_WIDTH } = Constants;
 
