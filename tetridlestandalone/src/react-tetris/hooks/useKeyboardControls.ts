@@ -1,5 +1,5 @@
 import React from 'react';
-import { Action } from '../models/Game';
+import type { Action } from '../models/Game';
 
 
 export type KeyboardMap = Map<string, Action>;

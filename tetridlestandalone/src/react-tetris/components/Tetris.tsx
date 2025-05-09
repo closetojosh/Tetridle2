@@ -4,8 +4,8 @@ import * as Game from '../models/Game';
 import HeldPiece from './HeldPiece';
 import PieceQueue from './PieceQueue';
 import { Context } from '../context';
-import { KeyboardMap, useKeyboardControls } from '../hooks/useKeyboardControls';
-import { Mission } from '../models/Game';
+import { type KeyboardMap, useKeyboardControls } from '../hooks/useKeyboardControls';
+import type { Mission } from '../models/Game';
 import { Checklist } from './Checklist';
 
 export type RenderFn = (params: {

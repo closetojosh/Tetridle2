@@ -1,6 +1,6 @@
 import Tetris from "./react-tetris/components/Tetris";
 import './App.css';
-import { Action, Clear, Mission } from "./react-tetris/models/Game";
+import type { Action, Clear, Mission } from "./react-tetris/models/Game";
 import StartingModal from "./react-tetris/components/StartingModal";
 import { useState } from "react";
 import CountdownOverlay from "./react-tetris/components/CountdownOverlay";

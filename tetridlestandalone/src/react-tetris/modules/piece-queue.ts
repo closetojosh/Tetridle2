@@ -1,6 +1,6 @@
 import PieceQueue from '../components/PieceQueue';
-import { Mission } from '../models/Game';
-import { Piece } from '../models/Piece';
+import type { Mission } from '../models/Game';
+import type { Piece } from '../models/Piece';
 
 export type PieceQueue = Piece[]
 

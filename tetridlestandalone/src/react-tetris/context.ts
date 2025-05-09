@@ -1,5 +1,5 @@
 import React from 'react';
-import { Game } from './models/Game';
+import type { Game } from './models/Game';
 import { buildMatrix } from './models/Matrix';
 import Constants from './constants'; 
 const defaultValue = {

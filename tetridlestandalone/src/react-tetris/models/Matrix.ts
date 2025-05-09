@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import Constants from '../constants';
-import { KickOffsets, getKickData, tk } from '../srsKicks';
-import { Clear } from './Game';
-import { Piece, Rotation, getBlocks } from './Piece';
+import { getKickData, tk } from '../srsKicks';
+import type { KickOffsets } from '../srsKicks';
+import type { Clear } from './Game';
+import { getBlocks } from './Piece';
+import type { Piece, Rotation } from './Piece';
 export type { Piece } from './Piece';
 const { GAME_HEIGHT, GAME_WIDTH } = Constants;
 

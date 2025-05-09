@@ -1,9 +1,5 @@
 {
   "dependencies": {
-    "canvas-confetti": "^1.9.3",
-    "keymaster": "^1.6.2"
-  },
-  "devDependencies": {
-    "@types/node": "^22.15.17"
+    "canvas-confetti": "^1.9.3"
   }
 }

@@ -1,6 +1,6 @@
 // srsKicks.ts
 
-import { Rotation, Piece } from './models/Piece'; // Assuming Piece.ts is in the same directory
+import type { Rotation, Piece } from './models/Piece'; // Assuming Piece.ts is in the same directory
 
 // Type definition for kick offsets [dx, dy]
 export type KickOffset = [number, number];

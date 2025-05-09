@@ -1,7 +1,4 @@
 import {
-    Matrix,
-    PositionedPiece,
-    Piece,
     buildMatrix,
     addPieceToBoard,
     isEmptyPosition,
@@ -13,6 +10,11 @@ import {
     setPiece,
     hardDrop,
     rotate180
+} from './Matrix';
+import type {
+    Matrix,
+    PositionedPiece,
+    Piece
 } from './Matrix';
 import Constants from '../constants';
 import * as PieceQueue from '../modules/piece-queue';
