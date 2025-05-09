@@ -37,12 +37,12 @@ export const useKeyboardControls = (
                     if (arrTimer.current) clearInterval(arrTimer.current);
                     currentAction.current = keyboardMap.get(event.key) as Action;
                     dasTimer.current = setTimeout(() => {
-                        arrTimer.current = setInterval(() => { keyboardDispatch[event.key]?.() }, ARR);
-                    }, DAS);
+                        arrTimer.current = setInterval(() => { keyboardDispatch[event.key]?.(); }, ARR) as unknown as number;
+                    }, DAS) as unknown as number;
                     
                 }
                 if (keyboardMap.get(event.key) == 'MOVE_DOWN') {
-                    softDropTimer.current = setInterval(() => { keyboardDispatch[event.key]?.() }, SOFTDROP_SPEED);
+                    softDropTimer.current = setInterval(() => { keyboardDispatch[event.key]?.() }, SOFTDROP_SPEED) as unknown as number;
                 }
                 keyboardDispatch[event.key]?.();
             }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './CountdownOverlay.css';
 
 export default function CountdownOverlay(props: { countdownEndCallback: () => unknown, isEnabled: boolean }) {

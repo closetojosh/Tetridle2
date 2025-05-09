@@ -3,10 +3,9 @@ import Constants from '../constants';
 import { KickOffsets, getKickData, tk } from '../srsKicks';
 import { Clear } from './Game';
 import { Piece, Rotation, getBlocks } from './Piece';
-
+export type { Piece } from './Piece';
 const { GAME_HEIGHT, GAME_WIDTH } = Constants;
 
-//export { Piece };
 export type Coords = {
   x: number;
   y: number;
