@@ -57,7 +57,7 @@ type Props = {
 //};
 
 // https://harddrop.com/wiki/Tetris_Worlds#Gravity
-export default function Tetris(props: Props): JSX.Element {
+export default function Tetris(props: Props): React.JSX.Element {
     const [game, dispatch] = React.useReducer(Game.update, { ...Game.init(props.mission, props.handleGameWin), state: 'PAUSED' });
     useEffect(() => {
         if (props.mission.clears.length === 0) return;

@@ -13,7 +13,7 @@ const defaultBlock = [
   [0, 0, 0, 0]
 ] as const;
 
-const PieceView: React.FC<Props> = ({ piece }): JSX.Element => {
+const PieceView: React.FC<Props> = ({ piece }): React.JSX.Element => {
   const fromPiece = piece && getBlocks(piece)[0];
   const blocks = fromPiece ?? defaultBlock;
 

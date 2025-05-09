@@ -2,7 +2,7 @@ import React from 'react';
 import PieceView from './PieceView';
 import { Context } from '../context';
 
-export default function PieceQueue(): JSX.Element {
+export default function PieceQueue(): React.JSX.Element {
     const { queue } = React.useContext(Context);
   //max length is 6 so this will always be enough
   const paddedQueue = [...queue, 'E', 'E', 'E', 'E', 'E', 'E'] as const

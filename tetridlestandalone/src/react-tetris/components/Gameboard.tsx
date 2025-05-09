@@ -3,7 +3,7 @@ import { viewMatrix } from '../models/Game';
 import { getClassName } from '../models/Piece';
 import { Context } from '../context';
 
-export default function GameboardView(): JSX.Element {
+export default function GameboardView(): React.JSX.Element {
   const game = React.useContext(Context);
   const matrix = viewMatrix(game);
 

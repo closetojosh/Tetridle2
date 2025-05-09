@@ -1,5 +1,5 @@
 // src/Portal.tsx
-import React, { useEffect, useRef, ReactNode } from 'react';
+import React, { useEffect, useRef, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 
 // Define the props interface
