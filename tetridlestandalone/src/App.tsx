@@ -1,11 +1,12 @@
 import Tetris from "./react-tetris/components/Tetris";
 import './App.css';
-import type { Action, Clear, Mission } from "./react-tetris/models/Game";
+import { DEFAULT_KEYBOARD_CONTROLS_ENTRIES, type Action, type Clear, type Mission } from "./react-tetris/models/Game";
 import StartingModal from "./react-tetris/components/StartingModal";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import CountdownOverlay from "./react-tetris/components/CountdownOverlay";
 import WinnerModal from "./react-tetris/components/WinnerModal";
 import confetti from 'canvas-confetti';
+import React from "react";
 const getClearString = (clear: Clear) => {
     const clearNames = ['Single', 'Double', 'Triple', 'Quad'];
     return `Clear a ${clear.isTSpin ? "T-Spin " : ""} ${clearNames[clear.lines - 1]} ${clear.isPerfectClear ? "with a Perfect Clear" : ""}`
@@ -49,6 +50,9 @@ const App = () => {
     const [isStartingModalOpen, setIsStartingModalOpen] = useState<boolean>(true);
     const [isWinnerModelOpen, setIsWinnerModelOpen] = useState<boolean>(false);
     const [isCountdownActive, setIsCountdownActive] = useState<boolean>(false);
+    const keyboardControls = useRef<Map<string, Action>>(new Map<string, Action>(
+        DEFAULT_KEYBOARD_CONTROLS_ENTRIES
+    ));
     const [score, setScore] = useState<number>(0);
     const handleGameWin = (timeTaken: number) => {
         setIsWinnerModelOpen(true);
@@ -62,6 +66,10 @@ const App = () => {
     const dailyMissions = testMission.clears.map(mission => getClearString(mission));
     const [activeMission, setActiveMission] = useState<Mission>(emptyMission);
     const countdownEndCallback = () => { setActiveMission(testMission) }
+    React.useEffect(() => {
+        const raw = localStorage.getItem('controls');
+        if (raw) keyboardControls.current = new Map<string, Action>(Object.entries(JSON.parse(raw)));
+    }, []);
     return (
         <div className="app">
             <CountdownOverlay countdownEndCallback={countdownEndCallback} isEnabled={isCountdownActive} />
@@ -69,6 +77,8 @@ const App = () => {
                 isOpen={isStartingModalOpen}
                 onClose={closeModal}
                 missions={dailyMissions}
+                setControls={(controls: Map<string, Action>) => { keyboardControls.current = controls; console.log(controls) }}
+                keyboardControls={keyboardControls}
             />
             <WinnerModal
                 isOpen={isWinnerModelOpen}
@@ -76,20 +86,7 @@ const App = () => {
                 score={score}
             />
             <h1 className="title">Tetridle</h1>
-            <Tetris keyboardControls={new Map<string, Action>([
-                // Default values shown here. These will be used if no
-                // `keyboardControls` prop is provided.
-                ["ArrowDown", 'MOVE_DOWN'],
-                ["ArrowLeft", 'MOVE_LEFT'],
-                ["ArrowRight", 'MOVE_RIGHT'],
-                [" ", 'HARD_DROP'],
-                ["z", 'FLIP_COUNTERCLOCKWISE'],
-                ["x", 'FLIP_CLOCKWISE'],
-                ["ArrowUp", 'FLIP_CLOCKWISE'],
-                ["p", 'TOGGLE_PAUSE'],
-                ["c", 'HOLD'],
-                ["Shift", 'FLIP_180']
-            ])}
+            <Tetris keyboardControls={keyboardControls.current}
                 mission={activeMission}
                 handleGameWin={handleGameWin}
             >

@@ -67,6 +67,20 @@ export type Action =
     | 'RESTART'
     | Game;
 
+export const DEFAULT_KEYBOARD_CONTROLS_ENTRIES = [
+    ["ArrowDown", 'MOVE_DOWN'],
+    ["ArrowLeft", 'MOVE_LEFT'],
+    ["ArrowRight", 'MOVE_RIGHT'],
+    [" ", 'HARD_DROP'],
+    ["z", 'FLIP_COUNTERCLOCKWISE'],
+    ["ArrowUp", 'FLIP_CLOCKWISE'],
+    ["p", 'TOGGLE_PAUSE'],
+    ["c", 'HOLD'],
+    ["Shift", 'FLIP_180']
+] as const
+export const ALL_ACTIONS_ORDERED = [
+    "MOVE_DOWN", "MOVE_LEFT", "MOVE_RIGHT", "HARD_DROP", "FLIP_CLOCKWISE", "FLIP_COUNTERCLOCKWISE", "FLIP_180", "HOLD"
+] as Action[]
 export const init = (mission: Mission, handleGameWin?: (timeTaken: number) => void): Game => {
     //Make API call to get the mission
     const queue = PieceQueue.create(mission);

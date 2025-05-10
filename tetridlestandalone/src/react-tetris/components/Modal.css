@@ -92,7 +92,22 @@
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.1s ease;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+}
+.modal-control-button {
+    /* Keep the green button for accent */
+    background-color: #979797;
+    border: none;
+    color: white;
+    padding: 4px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .modal-play-button:hover {
@@ -100,6 +115,13 @@
 }
 
 .modal-play-button:active {
+    transform: scale(0.98);
+}
+.modal-control-button:hover {
+    background-color: #747474;
+}
+
+.modal-control-button:active {
     transform: scale(0.98);
 }
 
@@ -189,4 +211,167 @@
     color: #999;
     text-align: center;
     padding: 10px 0;
+}
+
+.controls-modal-content {
+    min-width: 500px; /* Make it a bit wider for controls */
+    max-width: 700px;
+}
+
+.listening-prompt {
+    background-color: #4a5568; /* Darker blue-grey */
+    color: #e2e8f0; /* Light grey text */
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid #718096; /* Slightly lighter border */
+}
+
+    .listening-prompt .cancel-listen-button {
+        background-color: #c53030; /* Red */
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: 15px;
+        font-size: 0.9em;
+    }
+
+        .listening-prompt .cancel-listen-button:hover {
+            background-color: #e53e3e; /* Lighter red */
+        }
+
+
+.error-message {
+    background-color: #c53030; /* Dark red */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.controls-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    max-height: 300px; /* Or adjust as needed */
+    overflow-y: auto; /* Scroll for many actions */
+    border: 1px solid #4a5568; /* Darker border */
+    border-radius: 6px;
+    background-color: #3a3a3a; /* Slightly different dark shade for the list area */
+}
+
+.control-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    border-bottom: 1px solid #4a5568; /* Darker border */
+    color: #cbd5e0; /* Lighter text for items */
+}
+
+    .control-item:last-child {
+        border-bottom: none;
+    }
+
+.action-name {
+    flex-grow: 1;
+    font-weight: 500;
+    text-transform: capitalize;
+    color: #e2e8f0; /* Brighter text for action name */
+}
+
+.key-display {
+    min-width: 120px; /* Ensure consistent width */
+    text-align: center;
+    font-weight: bold;
+    color: #a0aec0; /* Muted color for keys */
+    background-color: #2d3748; /* Darker background for key display */
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin: 0 15px;
+}
+
+.change-key-button {
+    background-color: #3182ce; /* Blue */
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    min-width: 80px; /* Consistent button width */
+    text-align: center;
+    transition: background-color 0.2s ease;
+}
+
+    .change-key-button:hover:not(:disabled) {
+        background-color: #2b6cb0; /* Darker blue */
+    }
+
+    .change-key-button:disabled {
+        background-color: #4a5568; /* Greyed out */
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: 10px; /* Space between buttons */
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #4a5568; /* Separator line */
+}
+
+/* Generic modal buttons - you might already have these or similar */
+.modal-button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+    .modal-button:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+.modal-button-primary {
+    background-color: #4CAF50; /* Green (like play button) */
+    color: white;
+}
+
+    .modal-button-primary:hover:not(:disabled) {
+        background-color: #45a049;
+    }
+
+.modal-button-secondary {
+    background-color: #6366f1; /* Indigo */
+    color: white;
+}
+
+    .modal-button-secondary:hover:not(:disabled) {
+        background-color: #4f46e5; /* Darker Indigo */
+    }
+
+/* If you want a more distinct cancel button */
+.modal-button.cancel {
+    background-color: #718096; /* Grey */
+}
+
+    .modal-button.cancel:hover:not(:disabled) {
+        background-color: #4a5568; /* Darker Grey */
+    }
+
+.vertical-flexbox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
