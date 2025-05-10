@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, type Ref } from 'react';
+import React, { useState, useEffect, useCallback, type RefObject } from 'react';
 import Portal from './Portal';
 import { type Action, ALL_ACTIONS_ORDERED, DEFAULT_KEYBOARD_CONTROLS_ENTRIES, } from '../models/Game';
 import './Modal.css'; // Reusing existing styles + new ones for controls
@@ -6,7 +6,7 @@ import './Modal.css'; // Reusing existing styles + new ones for controls
 interface ControlsModalProps {
     isOpen: boolean;
     onClose: () => void;
-    keyboardControls: Ref<Map<string, Action>>;
+    keyboardControls: RefObject<Map<string, Action>>;
     setKeyboardControls: (newControls: Map<string, Action>) => void;
 }
 

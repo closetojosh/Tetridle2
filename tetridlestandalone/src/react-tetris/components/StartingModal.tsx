@@ -1,5 +1,5 @@
 // src/Modal.tsx
-import React, { useEffect, useState, type Ref } from 'react';
+import React, { useEffect, useState, type RefObject } from 'react';
 import Portal from './Portal';
 import './Modal.css'; // CSS styles remain the same
 import { Checklist } from './Checklist';
@@ -12,7 +12,7 @@ interface ModalProps {
     onClose: () => void; // A function that takes no arguments and returns nothing
     missions?: string[]; // An optional array of strings (defaults to empty array below)
     setControls: (controls: Map<string, Action>) => void; // Optional function to set controls
-    keyboardControls: Ref<Map<string, Action>>; // Optional keyboard controls
+    keyboardControls: RefObject<Map<string, Action>>; // Optional keyboard controls
 }
 
 const StartingModal: React.FC<ModalProps> = ({ isOpen, onClose, missions = [], setControls, keyboardControls }) => {
