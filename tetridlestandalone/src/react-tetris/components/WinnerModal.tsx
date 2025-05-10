@@ -65,18 +65,10 @@ const WinnerModal: React.FC<WinnerModalProps> = ({ isOpen, onClose, score }) => 
         e.stopPropagation();
     };
 
-    const handleOverlayClick = () => {
-        onClose();
-    }
-
     return (
         <Portal>
-            <div className="modal-overlay" onClick={handleOverlayClick} role="dialog" aria-modal="true">
+            <div className="modal-overlay" role="dialog" aria-modal="true">
                 <div className="modal-content win-modal" onClick={handleContentClick}>
-                    <button className="modal-close-button" onClick={onClose} aria-label="Close modal">
-                        &times;
-                    </button>
-
                     <h1 className="modal-title">You won!</h1>
                     <h3>and it only took you {score} seconds</h3>
                     <button

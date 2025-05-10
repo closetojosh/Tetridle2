@@ -46,20 +46,11 @@ const StartingModal: React.FC<ModalProps> = ({ isOpen, onClose, missions = [], s
         e.stopPropagation(); // Prevent click from bubbling up to the overlay
     };
 
-    // Type the event for the overlay click handler
-    const handleOverlayClick = () => {
-        // Optional: Check if the click was directly on the overlay, not the content
-        // if (e.target === e.currentTarget) {
-        onClose();
-        // }
-    }
-
     return (
         <>
             <Portal>
                 <div
                     className="modal-overlay"
-                    onClick={handleOverlayClick} // Use the typed handler
                     role="dialog"
                     aria-modal="true"
                 >
