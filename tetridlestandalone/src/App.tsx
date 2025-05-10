@@ -57,6 +57,9 @@ const App = () => {
     const handleGameWin = (timeTaken: number) => {
         setIsWinnerModelOpen(true);
         setScore(timeTaken);
+        const currentDate = new Date();
+        const dateString = currentDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+        localStorage.setItem(`score-${dateString}`, timeTaken.toString()); 
         confetti({spread: 90});
     };
     const closeModal = () => {
@@ -68,7 +71,14 @@ const App = () => {
     const countdownEndCallback = () => { setActiveMission(testMission) }
     React.useEffect(() => {
         const raw = localStorage.getItem('controls');
-        if (raw) keyboardControls.current = new Map<string, Action>(Object.entries(JSON.parse(raw)));
+        if (raw && Object.entries(JSON.parse(raw)).length > 0) keyboardControls.current = new Map<string, Action>(Object.entries(JSON.parse(raw)));
+        const currentDate = new Date();
+        const dateString = currentDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+        const storedScore = localStorage.getItem(`score-${dateString}`);
+        if (storedScore) {
+            handleGameWin(parseInt(storedScore));
+            setIsStartingModalOpen(false);
+        }
     }, []);
     return (
         <div className="app">
