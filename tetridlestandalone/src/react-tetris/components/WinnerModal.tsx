@@ -39,7 +39,7 @@ const WinnerModal: React.FC<WinnerModalProps> = ({ isOpen, onClose, score }) => 
 
     const handleShareScore = async () => {
         try {
-            await navigator.clipboard.writeText(`I beat today's Tetridle in ${score} seconds! Try your hand at tetridle.com'`);
+            await navigator.clipboard.writeText(`I beat today's Tetridle in ${score} seconds! Try your hand at https://tetridle2-3umt.vercel.app/'`);
             setShowToast(true);
 
             // Clear any existing timeout
