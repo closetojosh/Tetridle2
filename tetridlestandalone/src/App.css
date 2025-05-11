@@ -1,24 +1,24 @@
 ﻿.game-block {
     margin: 0;
     padding: 0;
-    width: 1.5em;
-    height: 1.5em;
+    width: 1.2em;
+    height: 1.2em;
     border: 1px solid #ddd;
 }
 .game-block-piece-view {
     margin: 0;
     padding: 0;
-    width: 1.25em;
-    height: 1.25em;
+    width: 1em;
+    height: 1em;
     border: 1px solid #ddd;
 }
 .block-empty-piece-view {
-    width: 1.25em;
-    height: 1.25em;
+    width: 1em;
+    height: 1em;
 }
 .block-empty {
-    width: 1.5em;
-    height: 1.5em;
+    width: 1.2em;
+    height: 1.2em;
 }
 .piece-i {
     background-color: #ec858b;

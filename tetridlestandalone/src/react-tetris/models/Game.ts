@@ -132,7 +132,7 @@ export const update = (game: Game, action: Action): Game => {
             if (game.piece === updated.piece) {
                 return incrementLockInTicks(tickUpdatedGame, 10000);
             } else {
-                return tickUpdatedGame;
+                return updated;
             }
         }
         case 'MOVE_DOWN': {
