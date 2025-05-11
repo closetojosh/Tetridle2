@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Portal from './Portal';
 import './Modal.css'; // We'll add toast styles here later
+import { formatTime } from './Timer';
 
 interface WinnerModalProps {
     isOpen: boolean;
@@ -39,7 +40,8 @@ const WinnerModal: React.FC<WinnerModalProps> = ({ isOpen, onClose, score }) => 
 
     const handleShareScore = async () => {
         try {
-            await navigator.clipboard.writeText(`I beat today's Tetridle in ${score} seconds! Try your hand at https://tetridle2-3umt.vercel.app/`);
+
+            await navigator.clipboard.writeText(`I beat today's Tetridle in ${formatTime(score)}!Try your hand at https://tetridle2-3umt.vercel.app/`);
             setShowToast(true);
 
             // Clear any existing timeout
@@ -70,7 +72,7 @@ const WinnerModal: React.FC<WinnerModalProps> = ({ isOpen, onClose, score }) => 
             <div className="modal-overlay" role="dialog" aria-modal="true">
                 <div className="modal-content win-modal" onClick={handleContentClick}>
                     <h1 className="modal-title">You won!</h1>
-                    <h3>and it only took you {score} seconds</h3>
+                    <h3>and it only took you {formatTime(score)}</h3>
                     <button
                         className="modal-play-button" // Reusing green button style
                         onClick={handleShareScore}

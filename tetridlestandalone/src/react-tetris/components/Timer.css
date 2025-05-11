@@ -1,0 +1,30 @@
+.timer-container {
+    /* Using a grey hue similar to the modal's content background */
+    background-color: #2d2d2d;
+    /* Light text color for contrast */
+    color: #e0e0e0;
+    padding: 10px 20px; /* Adjust padding as needed */
+    border-radius: 8px; /* Rounded corners like modal elements */
+    display: inline-block; /* So it only takes up the space it needs */
+    font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif; /* Consistent font */
+    border: 1px solid #444; /* Subtle border like modal content */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    text-align: center;
+    min-width: 10px; /* Minimum width to prevent squishing */
+    margin-top: 4px
+}
+
+.timer-text {
+    font-size: 1.4rem; /* Large, readable text */
+    font-weight: bold;
+    letter-spacing: 1px; /* Slight letter spacing for clarity */
+}
+
+/* Example of how you might use an additional class if passed via props */
+.timer-container.large {
+    padding: 15px 30px;
+}
+
+    .timer-container.large .timer-text {
+        font-size: 2.5rem;
+    }

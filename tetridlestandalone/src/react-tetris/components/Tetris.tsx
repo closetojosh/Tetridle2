@@ -7,11 +7,13 @@ import { Context } from '../context';
 import { type KeyboardMap, useKeyboardControls } from '../hooks/useKeyboardControls';
 import type { Mission } from '../models/Game';
 import { Checklist } from './Checklist';
+import Timer from './Timer';
 
 export type RenderFn = (params: {
     HeldPiece: React.ComponentType;
     Gameboard: React.ComponentType;
     PieceQueue: React.ComponentType;
+    Timer: React.ComponentType;
     Checklist: React.ComponentType<{ missions: string[], className?: string }>;
     points: number;
     linesCleared: number;
@@ -107,6 +109,7 @@ export default function Tetris(props: Props): React.JSX.Element {
                 Gameboard,
                 PieceQueue,
                 Checklist,
+                Timer,
                 points: game.points,
                 linesCleared: game.lines,
                 state: game.state,

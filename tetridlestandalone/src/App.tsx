@@ -104,12 +104,16 @@ const App = () => {
                     HeldPiece,
                     Gameboard,
                     PieceQueue,
-                    Checklist
+                    Checklist,
+                    Timer
                 }) => (
                     <div className="flex-col-center">
                         <div className="flex-col-center">
                             <div className="game">
-                                <HeldPiece />
+                                <div className="vertical-flexbox-top">
+                                    <HeldPiece />
+                                    <Timer />
+                                </div>
                                 <Gameboard />
                                 <PieceQueue />
                             </div>
