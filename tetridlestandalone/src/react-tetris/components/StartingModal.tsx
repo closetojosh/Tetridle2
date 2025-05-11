@@ -19,23 +19,6 @@ const StartingModal: React.FC<ModalProps> = ({ isOpen, onClose, missions = [], s
     const [isControlsModalOpen, setIsControlsModalOpen] = useState<boolean>(false);
     const closeControlsModal = () => { setIsControlsModalOpen(false)};
     // Effect for handling the Escape key
-    useEffect(() => {
-        // Type the event parameter as KeyboardEvent
-        const handleEsc = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') {
-                onClose();
-            }
-        };
-
-        if (isOpen) {
-            window.addEventListener('keydown', handleEsc);
-        }
-
-        // Cleanup
-        return () => {
-            window.removeEventListener('keydown', handleEsc);
-        };
-    }, [isOpen, onClose]); // Dependencies
 
     if (!isOpen) {
         return null;

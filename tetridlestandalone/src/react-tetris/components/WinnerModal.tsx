@@ -9,24 +9,9 @@ interface WinnerModalProps {
     score: number; // The string to be copied to the clipboard
 }
 
-const WinnerModal: React.FC<WinnerModalProps> = ({ isOpen, onClose, score }) => {
+const WinnerModal: React.FC<WinnerModalProps> = ({ isOpen, score }) => {
     const [showToast, setShowToast] = useState<boolean>(false);
     const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null); // For managing the toast timeout
-
-    // Effect for handling the Escape key
-    useEffect(() => {
-        const handleEsc = (event: KeyboardEvent) => {
-            if (event.key === 'Escape') {
-                onClose();
-            }
-        };
-        if (isOpen) {
-            window.addEventListener('keydown', handleEsc);
-        }
-        return () => {
-            window.removeEventListener('keydown', handleEsc);
-        };
-    }, [isOpen, onClose]);
 
     // Effect to clear timeout when component unmounts or isOpen changes
     useEffect(() => {
