@@ -1,5 +1,5 @@
-// src/Modal.tsx
-import React, { useEffect, useState, type RefObject } from 'react';
+
+import React, { useState, type RefObject } from 'react';
 import Portal from './Portal';
 import './Modal.css'; // CSS styles remain the same
 import { Checklist } from './Checklist';
