@@ -86,7 +86,7 @@ export const DEFAULT_KEYBOARD_CONTROLS_ENTRIES = [
 export const ALL_ACTIONS_ORDERED = [
     "MOVE_DOWN", "MOVE_LEFT", "MOVE_RIGHT", "HARD_DROP", "FLIP_CLOCKWISE", "FLIP_COUNTERCLOCKWISE", "FLIP_180", "HOLD"
 ] as Action[]
-export const init = (mission: Mission, handleGameWin?: (timeTaken: number) => void): Game => {
+export const init = (mission: Mission, handleGameWin?: (timeTaken: number) => void, currentTicks?: number): Game => {
     //Make API call to get the mission
     const queue = PieceQueue.create(mission);
     const next = PieceQueue.getNext(queue);
@@ -101,7 +101,7 @@ export const init = (mission: Mission, handleGameWin?: (timeTaken: number) => vo
         dasTimers: { left: -1, right: -1 },
         bottomOutTicks: 0,
         mission: mission,
-        ticks: 0,
+        ticks: currentTicks ?? 0,
         isMissionCompleted: mission.clears.map(() => false),
         handleGameWin: handleGameWin
     };
@@ -218,7 +218,7 @@ const lockInPiece = (game: Game): Game => {
     const isQueueEmpty = next.piece == 'E';
     const isLost = !isWon && ((isQueueEmpty && !game.heldPiece) || (!isQueueEmpty && !isEmptyPosition(matrix, piece)));
     if (isLost) {
-        return init(game.mission);
+        return init(game.mission, undefined, game.ticks);
     }
     return {
         ...game,
