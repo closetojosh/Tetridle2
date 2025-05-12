@@ -32,6 +32,11 @@ export type Mission = {
     clears: Clear[];
     pieces: Piece[];
 }
+export type EditorMission = {
+    editorStartingPosition: string[][];
+    clears: Clear[];
+    pieces: Piece[];
+}
 export type Game = {
     state: State;
     matrix: Matrix;
@@ -208,7 +213,9 @@ const lockInPiece = (game: Game): Game => {
     const finalMissionClears = newMissionClears.map((missionClear, i) => missionClear || game.isMissionCompleted[i]);
     const isWon = finalMissionClears.every((missionClear) => missionClear);
     if (isWon) game.handleGameWin?.(game.ticks)
-    const isLost = !isWon && (next.piece == 'E' || !isEmptyPosition(matrix, piece));
+    const isQueueEmpty = next.piece == 'E';
+    // add functionality to use hold if queue is empty
+    const isLost = !isWon && ((isQueueEmpty && !game.heldPiece?.available) || !isEmptyPosition(matrix, piece));
     if (isLost) {
         return init(game.mission);
     }

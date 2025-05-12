@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import './CountdownOverlay.css';
+import { isTest } from '../../App';
 
 export default function CountdownOverlay(props: { countdownEndCallback: () => unknown, isEnabled: boolean }) {
-    const [count, setCount] = useState<number | null>(3);
+    const [count, setCount] = useState<number | null>(isTest ? 1 : 3);
     useEffect(() => {
         if (!props.isEnabled) return;
         if (count === null || count === 0) return;

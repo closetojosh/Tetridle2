@@ -7,6 +7,8 @@ import CountdownOverlay from "./react-tetris/components/CountdownOverlay";
 import WinnerModal from "./react-tetris/components/WinnerModal";
 import confetti from 'canvas-confetti';
 import React from "react";
+import { missionList, translateMission } from "./missionList";
+export const isTest = true;
 const getClearString = (clear: Clear) => {
     const clearNames = ['Single', 'Double', 'Triple', 'Quad'];
     return `Clear a ${clear.isTSpin ? "T-Spin " : ""} ${clearNames[clear.lines - 1]} ${clear.isPerfectClear ? "with a Perfect Clear" : ""}`
@@ -17,36 +19,17 @@ const emptyMission: Mission = {
     clears: [],
     pieces: [],
 }
-const testMission: Mission = {
-    startingPosition: [
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, null, null, null, null, null, null],
-        [null, null, null, null, 'grey', 'grey', 'grey', 'grey', 'grey', 'grey'],
-        [null, null, null, null, 'grey', 'grey', 'grey', 'grey', 'grey', 'grey'],
-        [null, null, null, null, 'grey', 'grey', 'grey', 'grey', 'grey', 'grey'],
-        [null, null, null, 'L' , 'grey', 'grey', 'grey', 'grey', 'grey', 'grey'],
-        [null, null, null, 'L' , 'grey', 'grey', 'grey', 'grey', 'grey', 'grey'],
-        [null, null, 'L', 'L'  , 'grey', 'grey', 'grey', 'grey', 'grey', 'grey'],
-    ],
-    pieces: ['L', 'J', 'L', 'J', 'T', 'T'],
-    clears: [
-        { lines: 2, isPerfectClear: false, isTSpin: true }, 
-        { lines: 2, isPerfectClear: false, isTSpin: true }
-    ]
+export function daysSinceMay122025(): number {
+    if (isTest) {
+        return missionList.length - 1;
+    }
+    const MS_PER_DAY = 86_400_000;                     // 24 h × 60 m × 60 s × 1000 ms
+    const anchor = new Date('2025-05-12T00:00:00-04:00'); // EDT (Toronto)
+    const diffMs = Date.now() - anchor.getTime();
+    return Math.max(Math.floor(diffMs / MS_PER_DAY), 0);
 }
 const App = () => {
+    const todaysMissionRef = useRef(translateMission(missionList[daysSinceMay122025()]));
     const [isStartingModalOpen, setIsStartingModalOpen] = useState<boolean>(true);
     const [isWinnerModelOpen, setIsWinnerModelOpen] = useState<boolean>(false);
     const [isCountdownActive, setIsCountdownActive] = useState<boolean>(false);
@@ -66,16 +49,16 @@ const App = () => {
         setIsStartingModalOpen(false);
         setIsCountdownActive(true);
     };
-    const dailyMissions = testMission.clears.map(mission => getClearString(mission));
+    const dailyMissions = todaysMissionRef.current.clears.map(mission => getClearString(mission));
     const [activeMission, setActiveMission] = useState<Mission>(emptyMission);
-    const countdownEndCallback = () => { setActiveMission(testMission) }
+    const countdownEndCallback = () => { setActiveMission(todaysMissionRef.current) }
     React.useEffect(() => {
         const raw = localStorage.getItem('controls');
         if (raw && Object.entries(JSON.parse(raw)).length > 0) keyboardControls.current = new Map<string, Action>(Object.entries(JSON.parse(raw)));
         const currentDate = new Date();
         const dateString = currentDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
         const storedScore = localStorage.getItem(`score-${dateString}`);
-        if (storedScore) {
+        if (storedScore && !isTest) {
             handleGameWin(parseInt(storedScore));
             setIsStartingModalOpen(false);
         }
