@@ -87,7 +87,6 @@ export function setPiece(
 }
 
 function clearFullLines(matrix: Matrix, currentPiece: Piece, position: Coords): Clear {
-    const isPerfectClear = matrix.every(row => row.every(cell => cell === null));
 
     const isTSpin = detectTSpin(matrix, currentPiece, position);
 
@@ -99,6 +98,7 @@ function clearFullLines(matrix: Matrix, currentPiece: Piece, position: Coords): 
             lines += 1;
         }
     }
+    const isPerfectClear = matrix.every(row => row.every(cell => cell === null));
     return {
         lines,
         isPerfectClear,
