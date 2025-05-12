@@ -103,6 +103,151 @@ export const missionList: EditorMission[] = [
         clears: [
             { lines: 4, isPerfectClear: true, isTSpin: false }
         ]
+    },
+    {
+        editorStartingPosition: [
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'G', 'C', 'C'],
+            ['C', 'C', 'C', 'C', 'N', 'N', 'N', 'G', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'C', 'N', 'C', 'C', 'N', 'N'],
+        ],
+        pieces: ['O', 'T', 'S', 'J', 'T', 'T'],
+        clears: [
+            { lines: 2, isPerfectClear: false, isTSpin: true },
+            { lines: 2, isPerfectClear: false, isTSpin: true },
+            { lines: 2, isPerfectClear: false, isTSpin: true }
+        ]
+    },
+    {
+        editorStartingPosition: [
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'C', 'C', 'C'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'C', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'C', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'C', 'C', 'N', 'N', 'N', 'N', 'N'],
+            ['C', 'N', 'C', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+        ],
+        pieces: ['J', 'I', 'O', 'T', 'T'],
+        clears: [
+            { lines: 2, isPerfectClear: false, isTSpin: true },
+            { lines: 2, isPerfectClear: false, isTSpin: true }
+        ]
+    },
+    {
+        editorStartingPosition: [
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'C'],
+            ['N', 'N', 'N', 'N', 'N', 'C', 'C', 'C', 'C', 'N'],
+            ['N', 'N', 'N', 'N', 'C', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+        ],
+        pieces: ['I', 'L', 'J', 'J', 'T', 'T'],
+        clears: [
+            { lines: 3, isPerfectClear: false, isTSpin: true },
+        ]
+    },
+    {
+        editorStartingPosition: [
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'G', 'C', 'C', 'C', 'C', 'C', 'C'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+        ],
+        pieces: ['L', 'I', 'L', 'S', 'T', 'T'],
+        clears: [
+            { lines: 3, isPerfectClear: false, isTSpin: true },
+            { lines: 3, isPerfectClear: false, isTSpin: true }
+        ]
+    },
+    {
+        editorStartingPosition: [
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['C', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'C', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'C', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'C', 'C', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'G', 'G', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'G', 'G'],
+        ],
+        pieces: ['J', 'O', 'S', 'L', 'Z', 'T', 'T'],
+        clears: [
+            { lines: 3, isPerfectClear: false, isTSpin: true },
+            { lines: 1, isPerfectClear: false, isTSpin: true }
+        ]
     }
 ]
 export const baseMission: EditorMission = {
