@@ -6,7 +6,7 @@ import { Context } from '../context';
 export default function GameboardView(): React.JSX.Element {
   const game = React.useContext(Context);
   const matrix = viewMatrix(game);
-
+    console.log(matrix);
   return (
     <table className="game-board">
       <tbody>
