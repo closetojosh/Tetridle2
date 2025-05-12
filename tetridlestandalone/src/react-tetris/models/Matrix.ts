@@ -118,7 +118,7 @@ function detectTSpin(matrix: Matrix, piece: Piece, position: Coords): boolean {
 
     let occupiedCorners = 0;
     for (const [cy, cx] of corners) {
-        if (matrix[cy]?.[cx]) {
+        if (matrix[cy]?.[cx] || cy < 0 || cy > 19 || cx < 0 || cx > 19) {
             occupiedCorners++;
         }
     }
