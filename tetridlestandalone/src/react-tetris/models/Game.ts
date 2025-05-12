@@ -166,7 +166,7 @@ export const update = (game: Game, action: Action): Game => {
         }
         case 'HOLD': {
             if (game.state !== 'PLAYING') return game;
-            if (game.heldPiece && !game.heldPiece.available) return game;
+            if (game.heldPiece && !game.heldPiece.available || PieceQueue.getNext(game.queue).piece == 'E') return game;
 
             // Ensure the held piece will fit on the matrix
             if (
@@ -214,19 +214,18 @@ const lockInPiece = (game: Game): Game => {
     const isWon = finalMissionClears.every((missionClear) => missionClear);
     if (isWon) game.handleGameWin?.(game.ticks)
     const isQueueEmpty = next.piece == 'E';
-    // add functionality to use hold if queue is empty
-    const isLost = !isWon && ((isQueueEmpty && !game.heldPiece?.available) || !isEmptyPosition(matrix, piece));
+    const isLost = !isWon && ((isQueueEmpty && !game.heldPiece?.available) || (!isQueueEmpty && !isEmptyPosition(matrix, piece)));
     if (isLost) {
         return init(game.mission);
     }
     return {
         ...game,
         matrix,
-        piece,
-        heldPiece: game.heldPiece
+        piece: isQueueEmpty ? initializePiece(game.heldPiece?.piece!) : piece,
+        heldPiece: game.heldPiece && !isQueueEmpty
             ? { ...game.heldPiece, available: true }
             : undefined,
-        queue: next.queue,
+        queue: isQueueEmpty ? game.queue : next.queue,
         lines: game.lines + clear.lines,
         points: game.points + addScore(clear.lines),
         bottomOutTicks: 0,
