@@ -212,9 +212,6 @@ const lockInPiece = (game: Game): Game => {
     const newMissionClears = newMissionClear === -1 ? new Array(game.mission.clears.length).fill(false) : game.mission.clears.map((_, i) => i == newMissionClear);
     const finalMissionClears = newMissionClears.map((missionClear, i) => missionClear || game.isMissionCompleted[i]);
     const isWon = finalMissionClears.every((missionClear) => missionClear);
-    if (isWon) {
-        game.handleGameWin?.(game.ticks)
-    } 
     const isQueueEmpty = next.piece == 'E';
     const isLost = !isWon && ((isQueueEmpty && !game.heldPiece) || (!isQueueEmpty && !isEmptyPosition(matrix, piece)));
     if (isLost) {

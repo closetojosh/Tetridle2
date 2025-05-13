@@ -65,7 +65,11 @@ export default function Tetris(props: Props): React.JSX.Element {
         if (props.mission.clears.length === 0) return;
         dispatch(Game.init(props.mission, props.handleGameWin));
     }
-    , [props.mission]);
+        , [props.mission]);
+    const isWon = game.isMissionCompleted.every(mission => mission) && game.isMissionCompleted.length !== 0;
+    React.useEffect(() => {
+        if (isWon) props.handleGameWin(game.ticks)
+    }, [isWon])
     const keyboardMap = props.keyboardControls!;
     useKeyboardControls(keyboardMap, dispatch);
     const level = Game.getLevel(game);
