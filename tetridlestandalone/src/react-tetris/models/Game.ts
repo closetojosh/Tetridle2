@@ -153,7 +153,7 @@ export const update = (game: Game, action: Action): Game => {
             if (game.state !== 'PLAYING') return game;
             const updated = applyMove(moveDown, game);
             if (game.piece === updated.piece) {
-                return incrementLockInTicks(game, 10000 / (1000 / (game.settings.sdf ?? 1)));
+                return incrementLockInTicks(game, 5000 / (1000 / (game.settings.sdf ?? 1)));
             } else {
                 return updated;
             }
