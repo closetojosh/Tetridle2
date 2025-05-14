@@ -144,7 +144,7 @@ export const update = (game: Game, action: Action): Game => {
             if (game.state !== 'PLAYING') return tickUpdatedGame;
             const updated = applyMove(moveDown, tickUpdatedGame);
             if (game.piece === updated.piece) {
-                return incrementLockInTicks(tickUpdatedGame, 10000);
+                return incrementLockInTicks(tickUpdatedGame, 2000);
             } else {
                 return updated;
             }
