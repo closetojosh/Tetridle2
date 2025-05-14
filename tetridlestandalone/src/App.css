@@ -68,6 +68,8 @@
 
 .title {
     text-align: center;
+    margin-top: 0vh;
+    margin-bottom: 2vh;
 }
 .piece-view{
     height:fit-content;
@@ -78,6 +80,7 @@
     justify-content: center;
     align-content: center;
     width: 100vw;
+    height: 100vh;
 }
 .vertical-flexbox {
     display: flex;

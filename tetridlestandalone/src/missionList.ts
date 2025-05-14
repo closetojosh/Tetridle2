@@ -362,7 +362,8 @@ export const missionList: EditorMission[] = [
         pieces: ['L', 'I','L','T','T', 'Z'],
         clears: [
             { lines: 2, isPerfectClear: false, isTSpin: true },
-            { lines: 2, isPerfectClear: false, isTSpin: true }
+            { lines: 2, isPerfectClear: false, isTSpin: true },
+            { lines: 2, isPerfectClear: false, isTSpin: true },
         ]
     }
 ]
