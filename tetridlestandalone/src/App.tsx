@@ -8,7 +8,7 @@ import WinnerModal from "./react-tetris/components/WinnerModal";
 import confetti from 'canvas-confetti';
 import React from "react";
 import { missionList, translateMission } from "./missionList";
-export const isTest = true;
+export const isTest = false;
 const getClearString = (clear: Clear) => {
     const clearNames = ['Single', 'Double', 'Triple', 'Quad'];
     return `Clear a ${clear.isTSpin ? "T-Spin " : ""} ${clearNames[clear.lines - 1]} ${clear.isPerfectClear ? "with a Perfect Clear" : ""}`
