@@ -8,7 +8,6 @@ import WinnerModal from "./react-tetris/components/WinnerModal";
 import confetti from 'canvas-confetti';
 import React from "react";
 import { missionList, translateMission } from "./missionList";
-import { Analytics } from "@vercel/analytics/react"
 export const isTest = false;
 const getClearString = (clear: Clear) => {
     const clearNames = ['Single', 'Double', 'Triple', 'Quad'];
@@ -74,7 +73,6 @@ const App = () => {
     }, []);
     return (
         <div className="app">
-            <Analytics />
             <CountdownOverlay countdownEndCallback={countdownEndCallback} isEnabled={isCountdownActive} />
             <StartingModal
                 isOpen={isStartingModalOpen}
