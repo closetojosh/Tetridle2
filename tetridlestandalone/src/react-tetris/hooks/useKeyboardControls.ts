@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Action } from '../models/Game';
+import { DEFAULT_KEYBOARD_CONTROLS_ENTRIES, type Action } from '../models/Game';
 import type { GameSettings } from '../../App';
 
 
@@ -14,10 +14,22 @@ export const useKeyboardControls = (
     const arrTimer = React.useRef<number | null>(null);
     const softDropTimer = React.useRef<number | null>(null);
     React.useEffect(() => {
-        const keyboardDispatch = [...keyboardMap.entries()].reduce<KeyboardDispatch>((output, [key, action]) => {
-            output[key] = () => dispatch(action);
-            return output;
-        }, {});
+        let keyboardDispatch: KeyboardDispatch;
+        try {
+            keyboardDispatch = [...keyboardMap.entries()].reduce<KeyboardDispatch>((output, [key, action]) => {
+                output[key] = () => dispatch(action);
+                return output;
+            }, {});
+        }
+        catch {
+            const keyboardMap = new Map<string, Action>(DEFAULT_KEYBOARD_CONTROLS_ENTRIES);
+            keyboardDispatch = [...keyboardMap.entries()].reduce<KeyboardDispatch>((output, [key, action]) => {
+                output[key] = () => dispatch(action);
+                return output;
+            }, {});
+            localStorage.removeItem('controls');
+        }
+        
         function onEvent(event: KeyboardEvent) {
             if (event.repeat) return;
             if (event.type == "keyup") {
