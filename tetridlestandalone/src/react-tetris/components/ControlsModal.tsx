@@ -1,33 +1,33 @@
 import React, { useState, useEffect, useCallback, type RefObject } from 'react';
 import Portal from './Portal';
-import { type Action, ALL_ACTIONS_ORDERED, DEFAULT_KEYBOARD_CONTROLS_ENTRIES, } from '../models/Game';
+import { type Action, ALL_ACTIONS_ORDERED, DEFAULT_GAME_SETTINGS} from '../models/Game';
 import './Modal.css'; // Reusing existing styles + new ones for controls
+import type { GameSettings } from '../../App';
 
 interface ControlsModalProps {
     isOpen: boolean;
     onClose: () => void;
-    keyboardControls: RefObject<Map<string, Action>>;
-    setKeyboardControls: (newControls: Map<string, Action>) => void;
+    settings: RefObject<GameSettings>;
+    setSettings: (newControls: GameSettings) => void;
 }
 
 const ControlsModal: React.FC<ControlsModalProps> = ({
     isOpen,
     onClose,
-    keyboardControls,
-    setKeyboardControls,
+    settings,
+    setSettings,
 }) => {
-    const [editingControls, setEditingControls] = useState<Map<string, Action>>(new Map(keyboardControls!.current));
+    const [editingControls, setEditingControls] = useState<GameSettings>(settings.current);
     const [listeningForActionKey, setListeningForActionKey] = useState<Action | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
     // Reset editingControls when the modal is opened or external controls change
     useEffect(() => {
         if (isOpen) {
-            setEditingControls(new Map(keyboardControls!.current));
+            setEditingControls(settings.current);
             setErrorMessage(null); // Clear errors when modal opens
             setListeningForActionKey(null); // Stop listening if was active
         }
-    }, [isOpen, keyboardControls]);
+    }, [isOpen, settings]);
 
     const handleKeyDownCapture = useCallback((event: KeyboardEvent) => {
         event.preventDefault();
@@ -35,28 +35,28 @@ const ControlsModal: React.FC<ControlsModalProps> = ({
 
         if (!listeningForActionKey) return;
 
-        const tempControls = new Map(editingControls);
+        const tempControls = settings;
         let keyConflict = false;
 
         // Check if the new key is already assigned to a *different* action
-        if (tempControls.has(newKey) && tempControls.get(newKey) !== listeningForActionKey) {
-            const conflictingAction = tempControls.get(newKey);
+        if (tempControls.current.keyboardControls.has(newKey) && tempControls.current.keyboardControls.get(newKey) !== listeningForActionKey) {
+            const conflictingAction = tempControls.current.keyboardControls.get(newKey);
             setErrorMessage(`Error: Key "${newKey}" is already assigned to ${conflictingAction}.`);
             keyConflict = true;
         } else {
             setErrorMessage(null); // Clear previous error
             // Remove old key(s) for the action being remapped
-            tempControls.forEach((action, key) => {
+            tempControls.current.keyboardControls.forEach((action, key) => {
                 if (action === listeningForActionKey) {
-                    tempControls.delete(key);
+                    tempControls.current.keyboardControls.delete(key);
                 }
             });
             // Assign the new key
-            tempControls.set(newKey, listeningForActionKey);
+            tempControls.current.keyboardControls.set(newKey, listeningForActionKey);
         }
 
         if (!keyConflict) {
-            setEditingControls(tempControls);
+            setEditingControls(tempControls.current);
             setListeningForActionKey(null); // Stop listening
         }
     }, [listeningForActionKey, editingControls]);
@@ -82,13 +82,14 @@ const ControlsModal: React.FC<ControlsModalProps> = ({
     };
 
     const handleSaveChanges = () => {
-        localStorage.setItem('controls', JSON.stringify(Object.fromEntries(editingControls)));
-        setKeyboardControls(new Map(editingControls));
+        localStorage.setItem('controls', JSON.stringify(editingControls));
+        localStorage.setItem('keyMap', JSON.stringify(Object.fromEntries(editingControls.keyboardControls)));
+        setSettings(editingControls);
         onClose();
     };
 
     const handleResetToDefaults = () => {
-        setEditingControls(new Map(DEFAULT_KEYBOARD_CONTROLS_ENTRIES));
+        setEditingControls(DEFAULT_GAME_SETTINGS);
         setErrorMessage(null);
     };
 
@@ -132,7 +133,7 @@ const ControlsModal: React.FC<ControlsModalProps> = ({
                         {ALL_ACTIONS_ORDERED.map(action => (
                             <li key={action as React.Key} className="control-item">
                                 <span className="action-name">{(action as string).replace(/_/g, ' ')}:</span>
-                                <span className="key-display">{getKeysForActionDisplay(action, editingControls)}</span>
+                                <span className="key-display">{getKeysForActionDisplay(action, editingControls.keyboardControls)}</span>
                                 <button
                                     className="change-key-button"
                                     onClick={() => handleSetListening(action)}
@@ -143,7 +144,45 @@ const ControlsModal: React.FC<ControlsModalProps> = ({
                             </li>
                         ))}
                     </ul>
-
+                    <div className="game-settings-section">
+                        <h3 className="section-title">Timing Settings (milliseconds)</h3>
+                        <div className="setting-item">
+                            <label htmlFor="arr-input">Auto Repeat Rate (ARR): </label>
+                            <input
+                                type="number"
+                                id="arr-input"
+                                className="setting-input"
+                                value={editingControls.arr} // Assumes 'editingSettings' is your state object
+                                onChange={e => setEditingControls({ ...editingControls, arr: parseInt(e.target.value) }) } // Assumes 'handleNumericSettingChange' is your handler
+                                min="0"
+                                disabled={!!listeningForActionKey} // Assumes 'listeningForActionKey' is your state for when a key is being remapped
+                            />
+                        </div>
+                        <div className="setting-item">
+                            <label htmlFor="das-input">Delayed Auto Shift (DAS): </label>
+                            <input
+                                type="number"
+                                id="das-input"
+                                className="setting-input"
+                                value={editingControls.das} // Assumes 'editingSettings' is your state object
+                                onChange={e => setEditingControls({ ...editingControls, das: parseInt(e.target.value) })} // Assumes 'handleNumericSettingChange' is your handler
+                                min="0"
+                                disabled={!!listeningForActionKey} // Assumes 'listeningForActionKey' is your state
+                            />
+                        </div>
+                        <div className="setting-item">
+                            <label htmlFor="sdf-input">Soft Drop Delay (SDF): </label>
+                            <input
+                                type="number"
+                                id="sdf-input"
+                                className="setting-input"
+                                value={editingControls.sdf} // Assumes 'editingSettings' is your state object
+                                onChange={e => setEditingControls({ ...editingControls, sdf: parseInt(e.target.value) })} // Assumes 'handleNumericSettingChange' is your handler
+                                min="0"
+                                disabled={!!listeningForActionKey} // Assumes 'listeningForActionKey' is your state
+                            />
+                        </div>
+                    </div>
                     <div className="modal-actions">
                         <button className="modal-button modal-button-secondary" onClick={handleResetToDefaults} disabled={!!listeningForActionKey}>
                             Reset Defaults

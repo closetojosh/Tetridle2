@@ -1,6 +1,6 @@
 import Tetris from "./react-tetris/components/Tetris";
 import './App.css';
-import { DEFAULT_KEYBOARD_CONTROLS_ENTRIES, type Action, type Clear, type Mission } from "./react-tetris/models/Game";
+import { DEFAULT_GAME_SETTINGS, type Action, type Clear, type Mission } from "./react-tetris/models/Game";
 import StartingModal from "./react-tetris/components/StartingModal";
 import { useRef, useState } from "react";
 import CountdownOverlay from "./react-tetris/components/CountdownOverlay";
@@ -28,14 +28,20 @@ export function daysSinceMay122025(): number {
     const diffMs = Date.now() - anchor.getTime();
     return Math.max(Math.floor(diffMs / MS_PER_DAY), 0);
 }
+export interface GameSettings {
+    keyboardControls: Map<string, Action>;
+    arr: number; // Auto Repeat Rate in milliseconds
+    das: number; // Delayed Auto Shift in milliseconds
+    sdf: number; // Soft Drop Factor/Speed
+}
 const App = () => {
     const todaysMissionRef = useRef(translateMission(missionList[daysSinceMay122025()]));
     const [isStartingModalOpen, setIsStartingModalOpen] = useState<boolean>(true);
     const [isWinnerModelOpen, setIsWinnerModelOpen] = useState<boolean>(false);
     const [isCountdownActive, setIsCountdownActive] = useState<boolean>(false);
-    const keyboardControls = useRef<Map<string, Action>>(new Map<string, Action>(
-        DEFAULT_KEYBOARD_CONTROLS_ENTRIES
-    ));
+    const settings = useRef<GameSettings>(
+        DEFAULT_GAME_SETTINGS
+    );
     const [score, setScore] = useState<number>(0);
     const handleGameWin = (timeTaken: number) => {
         setIsWinnerModelOpen(true);
@@ -54,7 +60,9 @@ const App = () => {
     const countdownEndCallback = () => { setActiveMission(todaysMissionRef.current) }
     React.useEffect(() => {
         const raw = localStorage.getItem('controls');
-        if (raw && Object.entries(JSON.parse(raw)).length > 0) keyboardControls.current = new Map<string, Action>(Object.entries(JSON.parse(raw)));
+        const keyMap = localStorage.getItem('keyMap');
+        if (raw) settings.current = JSON.parse(raw);
+        if (keyMap && Object.entries(JSON.parse(keyMap)).length > 0) settings.current.keyboardControls = new Map(Object.entries(JSON.parse(keyMap)));
         const currentDate = new Date();
         const dateString = currentDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
         const storedScore = localStorage.getItem(`score-${dateString}`);
@@ -70,8 +78,8 @@ const App = () => {
                 isOpen={isStartingModalOpen}
                 onClose={closeModal}
                 missions={dailyMissions}
-                setControls={(controls: Map<string, Action>) => { keyboardControls.current = controls; console.log(controls) }}
-                keyboardControls={keyboardControls}
+                setSettings={(newSettings: GameSettings) => { settings.current = newSettings}}
+                settings={settings}
             />
             <WinnerModal
                 isOpen={isWinnerModelOpen}
@@ -79,7 +87,8 @@ const App = () => {
                 score={score}
             />
             <h1 className="title">Tetridle</h1>
-            <Tetris keyboardControls={keyboardControls.current}
+            <Tetris
+                settings={settings.current}
                 mission={activeMission}
                 handleGameWin={handleGameWin}
             >

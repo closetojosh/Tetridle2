@@ -19,6 +19,7 @@ import type {
 import Constants from '../constants';
 import * as PieceQueue from '../modules/piece-queue';
 import Settings from '../settings';
+import type { GameSettings } from '../../App';
 export type State = 'PAUSED' | 'PLAYING' | 'LOST';
 
 type HeldPiece = { available: boolean; piece: Piece };
@@ -50,6 +51,7 @@ export type Game = {
     mission: Mission;
     isMissionCompleted: boolean[];
     ticks: number;
+    settings: GameSettings;
     handleGameWin?: (timeTaken: number) => void
 };
 
@@ -83,10 +85,16 @@ export const DEFAULT_KEYBOARD_CONTROLS_ENTRIES = [
     ["c", 'HOLD'],
     ["Shift", 'FLIP_180']
 ] as const
+export const DEFAULT_GAME_SETTINGS : GameSettings = {
+    arr: 0,
+    das: 120, 
+    sdf: 10,
+    keyboardControls: new Map<string, Action>(DEFAULT_KEYBOARD_CONTROLS_ENTRIES)
+}
 export const ALL_ACTIONS_ORDERED = [
     "MOVE_DOWN", "MOVE_LEFT", "MOVE_RIGHT", "HARD_DROP", "FLIP_CLOCKWISE", "FLIP_COUNTERCLOCKWISE", "FLIP_180", "HOLD"
 ] as Action[]
-export const init = (mission: Mission, handleGameWin?: (timeTaken: number) => void, currentTicks?: number): Game => {
+export const init = (mission: Mission, handleGameWin?: (timeTaken: number) => void, currentTicks?: number, settings?: GameSettings): Game => {
     //Make API call to get the mission
     const queue = PieceQueue.create(mission);
     const next = PieceQueue.getNext(queue);
@@ -103,7 +111,8 @@ export const init = (mission: Mission, handleGameWin?: (timeTaken: number) => vo
         mission: mission,
         ticks: currentTicks ?? 0,
         isMissionCompleted: mission.clears.map(() => false),
-        handleGameWin: handleGameWin
+        handleGameWin: handleGameWin,
+        settings: settings ?? DEFAULT_GAME_SETTINGS
     };
 };
 
@@ -144,7 +153,7 @@ export const update = (game: Game, action: Action): Game => {
             if (game.state !== 'PLAYING') return game;
             const updated = applyMove(moveDown, game);
             if (game.piece === updated.piece) {
-                return incrementLockInTicks(game, 10000 / (1000 / Settings.SOFTDROP_DELAY));
+                return incrementLockInTicks(game, 10000 / (1000 / (game.settings.sdf ?? 1)));
             } else {
                 return updated;
             }

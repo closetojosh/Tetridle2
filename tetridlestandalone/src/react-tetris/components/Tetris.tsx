@@ -4,10 +4,11 @@ import * as Game from '../models/Game';
 import HeldPiece from './HeldPiece';
 import PieceQueue from './PieceQueue';
 import { Context } from '../context';
-import { type KeyboardMap, useKeyboardControls } from '../hooks/useKeyboardControls';
+import { useKeyboardControls } from '../hooks/useKeyboardControls';
 import type { Mission } from '../models/Game';
 import { Checklist } from './Checklist';
 import Timer from './Timer';
+import type { GameSettings } from '../../App';
 
 export type RenderFn = (params: {
     HeldPiece: React.ComponentType;
@@ -37,7 +38,7 @@ export type Controller = {
 };
 
 type Props = {
-    keyboardControls?: KeyboardMap;
+    settings?: GameSettings;
     children: RenderFn;
     mission: Mission;
     handleGameWin: (score: number) => void;
@@ -60,18 +61,18 @@ type Props = {
 
 // https://harddrop.com/wiki/Tetris_Worlds#Gravity
 export default function Tetris(props: Props): React.JSX.Element {
-    const [game, dispatch] = React.useReducer(Game.update, { ...Game.init(props.mission, props.handleGameWin), state: 'PAUSED' });
+    const [game, dispatch] = React.useReducer(Game.update, { ...Game.init(props.mission, props.handleGameWin, 0, props.settings), state: 'PAUSED' });
     useEffect(() => {
         if (props.mission.clears.length === 0) return;
-        dispatch(Game.init(props.mission, props.handleGameWin));
+        dispatch(Game.init(props.mission, props.handleGameWin, 0, props.settings));
     }
         , [props.mission]);
     const isWon = game.isMissionCompleted.every(mission => mission) && game.isMissionCompleted.length !== 0;
     React.useEffect(() => {
         if (isWon) props.handleGameWin(game.ticks)
     }, [isWon])
-    const keyboardMap = props.keyboardControls!;
-    useKeyboardControls(keyboardMap, dispatch);
+    const gameSettings = props.settings!;
+    useKeyboardControls(gameSettings, dispatch);
     const level = Game.getLevel(game);
 
     React.useEffect(() => {

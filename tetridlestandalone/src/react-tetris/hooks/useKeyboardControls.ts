@@ -1,15 +1,14 @@
 import React from 'react';
 import type { Action } from '../models/Game';
+import type { GameSettings } from '../../App';
 
 
 export type KeyboardMap = Map<string, Action>;
-const ARR = 0;
-const SOFTDROP_SPEED = 20;
-const DAS = 100;
 export const useKeyboardControls = (
-    keyboardMap: KeyboardMap,
+    gameSettings: GameSettings,
     dispatch: React.Dispatch<Action>
 ): void => {
+    const keyboardMap = gameSettings.keyboardControls;
     const currentAction = React.useRef<Action | null>(null);
     const dasTimer = React.useRef<number | null>(null);
     const arrTimer = React.useRef<number | null>(null);
@@ -37,12 +36,12 @@ export const useKeyboardControls = (
                     if (arrTimer.current) clearInterval(arrTimer.current);
                     currentAction.current = keyboardMap.get(event.key) as Action;
                     dasTimer.current = setTimeout(() => {
-                        arrTimer.current = setInterval(() => { keyboardDispatch[event.key]?.(); }, ARR) as unknown as number;
-                    }, DAS) as unknown as number;
+                        arrTimer.current = setInterval(() => { keyboardDispatch[event.key]?.(); }, gameSettings.arr) as unknown as number;
+                    }, gameSettings.das) as unknown as number;
                     
                 }
                 if (keyboardMap.get(event.key) == 'MOVE_DOWN') {
-                    softDropTimer.current = setInterval(() => { keyboardDispatch[event.key]?.() }, SOFTDROP_SPEED) as unknown as number;
+                    softDropTimer.current = setInterval(() => { keyboardDispatch[event.key]?.() }, gameSettings.sdf) as unknown as number;
                 }
                 keyboardDispatch[event.key]?.();
             }

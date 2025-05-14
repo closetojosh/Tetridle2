@@ -3,19 +3,19 @@ import React, { useState, type RefObject } from 'react';
 import Portal from './Portal';
 import './Modal.css'; // CSS styles remain the same
 import { Checklist } from './Checklist';
-import type { Action } from '../models/Game';
 import ControlsModal from './ControlsModal';
+import type { GameSettings } from '../../App';
 
 // Define the interface for the component's props
 interface ModalProps {
     isOpen: boolean;
     onClose: () => void; // A function that takes no arguments and returns nothing
     missions?: string[]; // An optional array of strings (defaults to empty array below)
-    setControls: (controls: Map<string, Action>) => void; // Optional function to set controls
-    keyboardControls: RefObject<Map<string, Action>>; // Optional keyboard controls
+    setSettings: (controls: GameSettings) => void; // Optional function to set controls
+    settings: RefObject<GameSettings>; // Optional keyboard controls
 }
 
-const StartingModal: React.FC<ModalProps> = ({ isOpen, onClose, missions = [], setControls, keyboardControls }) => {
+const StartingModal: React.FC<ModalProps> = ({ isOpen, onClose, missions = [], setSettings, settings }) => {
     const [isControlsModalOpen, setIsControlsModalOpen] = useState<boolean>(false);
     const closeControlsModal = () => { setIsControlsModalOpen(false)};
     // Effect for handling the Escape key
@@ -54,8 +54,8 @@ const StartingModal: React.FC<ModalProps> = ({ isOpen, onClose, missions = [], s
             <ControlsModal
                 isOpen={isControlsModalOpen}
                 onClose={closeControlsModal}
-                keyboardControls={keyboardControls}
-                setKeyboardControls={setControls}
+                settings={settings}
+                setSettings={setSettings}
             />
         </>
     );
