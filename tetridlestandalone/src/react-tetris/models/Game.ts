@@ -52,7 +52,8 @@ export type Game = {
     isMissionCompleted: boolean[];
     ticks: number;
     settings: GameSettings;
-    handleGameWin?: (timeTaken: number) => void
+    handleGameWin?: (timeTaken: number) => void;
+    isLastMoveRotation: boolean;
 };
 
 
@@ -112,12 +113,13 @@ export const init = (mission: Mission, handleGameWin?: (timeTaken: number) => vo
         ticks: currentTicks ?? 0,
         isMissionCompleted: mission.clears.map(() => false),
         handleGameWin: handleGameWin,
-        settings: settings ?? DEFAULT_GAME_SETTINGS
+        settings: settings ?? DEFAULT_GAME_SETTINGS,
+        isLastMoveRotation: false
     };
 };
 
 export const update = (game: Game, action: Action): Game => {
-
+    if (!(['HARD_DROP', 'TICK', 'MOVE_DOWN'] as any[]).includes(action)) game.isLastMoveRotation = false;
     switch (action) {
         case 'RESTART': {
             return init(game.mission);
@@ -146,7 +148,7 @@ export const update = (game: Game, action: Action): Game => {
             if (game.piece === updated.piece) {
                 return incrementLockInTicks(tickUpdatedGame, 3500);
             } else {
-                return updated;
+                return { ...updated, isLastMoveRotation: false };
             }
         }
         case 'MOVE_DOWN': {
@@ -155,7 +157,7 @@ export const update = (game: Game, action: Action): Game => {
             if (game.piece === updated.piece) {
                 return incrementLockInTicks(game, 5000 / (1000 / (game.settings.sdf ?? 1)));
             } else {
-                return updated;
+                return { ...updated, isLastMoveRotation: false };
             }
         }
         case 'MOVE_LEFT': {
@@ -165,13 +167,13 @@ export const update = (game: Game, action: Action): Game => {
             return applyMove(moveRight, game);
         }
         case 'FLIP_CLOCKWISE': {
-            return applyMove(rotateClockwise, game);
+            return applyMove(rotateClockwise, { ...game, isLastMoveRotation: true });
         }
         case 'FLIP_COUNTERCLOCKWISE': {
-            return applyMove(rotateCounterclockwise, game);
+            return applyMove(rotateCounterclockwise, { ...game, isLastMoveRotation: true });
         }
         case 'FLIP_180': {
-            return applyMove(rotate180, game);
+            return applyMove(rotate180, { ...game, isLastMoveRotation: true });
         }
         case 'HOLD': {
             if (game.state !== 'PLAYING') return game;
@@ -214,7 +216,7 @@ if (game.state !== 'PLAYING') return game;
     return newGame;
 }
 const lockInPiece = (game: Game): Game => {
-    const [matrix, clear] = setPiece(game.matrix, game.piece);
+    const [matrix, clear] = setPiece(game.matrix, game.piece, game.isLastMoveRotation);
     const next = PieceQueue.getNext(game.queue);
     const piece = initializePiece(next.piece);
     const newMissionClear = game.mission.clears.findIndex((missionClear, index) => ifClearFits(clear, missionClear) && !game.isMissionCompleted[index]);
@@ -239,6 +241,7 @@ const lockInPiece = (game: Game): Game => {
         bottomOutTicks: 0,
         isMissionCompleted: finalMissionClears,
         state: isWon ? 'PAUSED' : game.state,
+        isLastMoveRotation: false
     };
 };
 const ifClearFits = (clear: Clear, missionClear: Clear) => {

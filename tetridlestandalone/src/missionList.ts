@@ -338,6 +338,7 @@ export const missionList: EditorMission[] = [
         ]
     },
     {
+        //I can't figure out the solution for this one, it may be impossible LOL
         editorStartingPosition: [
             ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
             ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],

@@ -78,17 +78,18 @@ export type PositionedPiece = {
 
 export function setPiece(
   matrix: Matrix,
-  positionedPiece: PositionedPiece
+    positionedPiece: PositionedPiece,
+  isLastMoveRotation: boolean
 ): [Matrix, Clear] {
   const _matrix = addPieceToBoard(matrix, positionedPiece);
     // TODO: purify
-    const clear = clearFullLines(_matrix, positionedPiece.piece, positionedPiece.position);
+    const clear = clearFullLines(_matrix, positionedPiece.piece, positionedPiece.position, isLastMoveRotation);
     return [_matrix, clear];
 }
 
-function clearFullLines(matrix: Matrix, currentPiece: Piece, position: Coords): Clear {
+function clearFullLines(matrix: Matrix, currentPiece: Piece, position: Coords, isLastMoveRotation: boolean): Clear {
 
-    const isTSpin = detectTSpin(matrix, currentPiece, position);
+    const isTSpin = isLastMoveRotation ? detectTSpin(matrix, currentPiece, position) : false;
 
     let lines = 0;
     for (let y = 0; y < matrix.length; y++) {
