@@ -2,7 +2,7 @@
 import Constants from '../constants';
 import { getKickData, tk } from '../srsKicks';
 import type { KickOffsets } from '../srsKicks';
-import type { Clear } from './Game';
+import type { Action, Clear } from './Game';
 import { getBlocks } from './Piece';
 import type { Piece, Rotation } from './Piece';
 export type { Piece } from './Piece';
@@ -79,17 +79,16 @@ export type PositionedPiece = {
 export function setPiece(
   matrix: Matrix,
     positionedPiece: PositionedPiece,
-  isLastMoveRotation: boolean
+  lastMove: Action
 ): [Matrix, Clear] {
   const _matrix = addPieceToBoard(matrix, positionedPiece);
     // TODO: purify
-    const clear = clearFullLines(_matrix, positionedPiece.piece, positionedPiece.position, isLastMoveRotation);
+    const clear = clearFullLines(_matrix, positionedPiece.piece, positionedPiece.position, lastMove);
     return [_matrix, clear];
 }
 
-function clearFullLines(matrix: Matrix, currentPiece: Piece, position: Coords, isLastMoveRotation: boolean): Clear {
-
-    const isTSpin = isLastMoveRotation ? detectTSpin(matrix, currentPiece, position) : false;
+function clearFullLines(matrix: Matrix, currentPiece: Piece, position: Coords, lastMove: Action): Clear {
+    const isTSpin = (['FLIP_180', 'FLIP_CLOCKWISE', 'FLIP_COUNTERCLOCKWISE'] as Action[]).includes(lastMove) ? detectTSpin(matrix, currentPiece, position) : false;
 
     let lines = 0;
     for (let y = 0; y < matrix.length; y++) {

@@ -36,7 +36,8 @@ export interface GameSettings {
     sdf: number; // Soft Drop Factor/Speed
 }
 const App = () => {
-    const todaysMissionRef = useRef(translateMission(missionList[daysSinceMay122025()]));
+    //ts-ignore
+    const [currentMission, _] = useState<Mission>(translateMission(missionList[daysSinceMay122025()]));
     const [isStartingModalOpen, setIsStartingModalOpen] = useState<boolean>(true);
     const [isWinnerModelOpen, setIsWinnerModelOpen] = useState<boolean>(false);
     const [isCountdownActive, setIsCountdownActive] = useState<boolean>(false);
@@ -56,9 +57,9 @@ const App = () => {
         setIsStartingModalOpen(false);
         setIsCountdownActive(true);
     };
-    const dailyMissions = todaysMissionRef.current.clears.map(mission => getClearString(mission));
+    const dailyMissions = currentMission.clears.map(mission => getClearString(mission));
     const [activeMission, setActiveMission] = useState<Mission>(emptyMission);
-    const countdownEndCallback = () => { setActiveMission(todaysMissionRef.current) }
+    const countdownEndCallback = () => { setActiveMission(currentMission) }
     React.useEffect(() => {
         const raw = localStorage.getItem('controls');
         const keyMap = localStorage.getItem('keyMap');
