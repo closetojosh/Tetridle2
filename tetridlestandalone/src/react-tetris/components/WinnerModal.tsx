@@ -57,7 +57,7 @@ const WinnerModal: React.FC<WinnerModalProps> = ({ isOpen, score }) => {
             <div className="modal-overlay" role="dialog" aria-modal="true">
                 <div className="modal-content win-modal" onClick={handleContentClick}>
                     <h1 className="modal-title">You won!</h1>
-                    <h3>and it only took you {formatTime(score)}</h3>
+                    <h3>and it only took you {formatTime(score)}. Come back tomorrow for a new puzzle!</h3>
                     <button
                         className="modal-play-button" // Reusing green button style
                         onClick={handleShareScore}
