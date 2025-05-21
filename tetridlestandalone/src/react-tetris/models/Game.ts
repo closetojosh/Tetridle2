@@ -117,7 +117,8 @@ export const init = (mission: Mission, handleGameWin?: (timeTaken: number) => vo
         lastMove: 'RESUME'
     };
 };
-
+const currentDate = new Date();
+const dateString = currentDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
 export const update = (game: Game, action: Action): Game => {
     switch (action) {
         case 'RESTART': {
@@ -141,7 +142,9 @@ export const update = (game: Game, action: Action): Game => {
         }
         case 'TICK':
         {
-            const tickUpdatedGame = {...game, ticks: game.ticks + 1};
+            const incrementedTicks = game.ticks + 1;
+            localStorage.setItem(`score-${dateString}`, incrementedTicks.toString()); 
+            const tickUpdatedGame = { ...game, ticks: incrementedTicks };
             if (game.state !== 'PLAYING') return tickUpdatedGame;
             const updated = applyMove(moveDown, tickUpdatedGame);
             if (game.piece === updated.piece) {

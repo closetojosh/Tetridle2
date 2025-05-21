@@ -41,6 +41,7 @@ const App = () => {
     const [isStartingModalOpen, setIsStartingModalOpen] = useState<boolean>(true);
     const [isWinnerModelOpen, setIsWinnerModelOpen] = useState<boolean>(false);
     const [isCountdownActive, setIsCountdownActive] = useState<boolean>(false);
+    const startingTicks = React.useRef<number>(0);
     const settings = useRef<GameSettings>(
         DEFAULT_GAME_SETTINGS
     );
@@ -51,6 +52,7 @@ const App = () => {
         const currentDate = new Date();
         const dateString = currentDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
         localStorage.setItem(`score-${dateString}`, timeTaken.toString()); 
+        localStorage.setItem(`won-${dateString}`, '1'); 
         confetti({spread: 90});
     };
     const closeModal = () => {
@@ -67,9 +69,12 @@ const App = () => {
         if (keyMap && Object.entries(JSON.parse(keyMap)).length > 0) settings.current.keyboardControls = new Map(Object.entries(JSON.parse(keyMap)));
         const currentDate = new Date();
         const dateString = currentDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+        const storedWon = localStorage.getItem(`won-${dateString}`);
         const storedScore = localStorage.getItem(`score-${dateString}`);
-        if (storedScore && !isTest) {
-            handleGameWin(parseInt(storedScore));
+        const parsedStoredScore = parseInt(storedScore ?? '0');
+        if (parsedStoredScore) startingTicks.current = parsedStoredScore;
+        if (storedWon && !isTest) {
+            handleGameWin(parsedStoredScore);
             setIsStartingModalOpen(false);
         }
     }, []);
@@ -94,6 +99,7 @@ const App = () => {
                 settings={settings.current}
                 mission={activeMission}
                 handleGameWin={handleGameWin}
+                startingTicks={startingTicks.current}
             >
                 {({
                     HeldPiece,
