@@ -366,7 +366,180 @@ export const missionList: EditorMission[] = [
             { lines: 4, isPerfectClear: true, isTSpin: false }
         ]
     },
+    {
+        editorStartingPosition: [
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'G', 'G', 'G', 'G', 'G', 'G', 'G'],
+            ['N', 'N', 'N', 'G', 'G', 'G', 'G', 'G', 'G', 'G'],
+            ['N', 'N', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G'],
+            ['N', 'N', 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+        ],
+        pieces: ['J', 'J', 'J', 'I'],
+        clears: [
+            { lines: 4, isPerfectClear: false, isTSpin: false },
+        ]
+    },
+    {
+        //https://fumen.zui.jp/?v115@9gh0whRpBtC8g0wwwhRpglBtB8xwwhilD8g0ww0hC8?JeAgWaASEgRB5ngHBFbcRAS0GEBVRaHBQecRAylAAA9gwhh?0glQ4BtC8whg0wwglR4BtB8whxwhlQ4D8whg0wwzhC8JeAA?PaASB45A5ngHBFbcRAS0uABSIaHBQecRAylAAA9gywR4BtC?8g0wwR4RpBtB8zhRpD8i0zhC8JeAAPaAy835AwngHBFbcRA?S0+5AWOaHBQecRAylAAA9ghlwhh0BtC8wwglwhg0RpBtB8x?wwhg0RpD8wwgl0hC8JeAAPaAS7P9AyngHBFbcRAS0+5ASIa?HBQecRAylAAA9gh0RpQ4BtC8g0wwRpR4BtB8xwilQ4D8g0w?wglzhC8JeAAPaAy53UB4ngHBFbcRAS0+5AQUaHBQecRAylA?AA9gwhwwi0BtC8whxwR4glBtB8whwwR4g0glD80hhlC8JeA?APZAxFg2A1ngHBFbcRAS0ILBwmv2AUo78AZAAAA9gzhQ4Bt?C8i0wwR4BtB8RpywQ4D8Rpg0zhC8JeAAPZAREgRBxngHBFb?cRAS0YEB4mv2AUo78AZAAAA9gilzhC8glAtRpQ4ywB8BtRp?R4D8AtzhQ4wwC8JeAAPZAREIOBzngHBFbcRAS0YEB0mv2AU?o78AZAAAA9gwhilRpwwC8whglR4RpxwB8whR4i0D80hg0ww?C8JeAAPZAx8nABzngHBFbcRASEaOBymv2AUo78AZAAAA9gw?hhlzhC8whwwglh0AtR4B8whxwg0BtD8whwwglg0AtR4C8Je?AAPZAx5HOB1ngHBFbcRAS0HVBymv2AUo78AZAAAA9gwhQ4y?wBtC8whR4wwRpBtB8whilRpD8whglQ4zhC8JeAAPZAR43UB?1ngHBFbcRAS0nHBymv2AUo78AZAAAA9gzhwwBtC8Rpg0xwg?lBtB8Rpi0glD8zhwwhlC8JeAAA9gRpR4ywC8RpBtzhB8g0R?4BtwwD8i0zhC8JeAAPYAZlf9AFrnRASo78AYe22AvfEEBwn?AVB9gRpBtywC8RpR4zhB8g0R4BtwwD8i0zhC8JeAAA9gzhy?wC8ilRpwwR4B8BtzhD8glBtRpR4C8JeAAPYAXlYEBFrnRAS?o78AYek2AvfEEBwnAVB9gzhwwRpC8h0R4zhB8g0R4glxwD8?g0ilwwRpC8JeAAPYAVVkRBFrnRASo78AYr/KBvfEEBwnAVB
+        editorStartingPosition: [
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'G', 'C', 'C'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'G', 'C', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+        ],
+        pieces: ['I', 'I', 'J', 'L', 'O', 'T', 'Z'],
+        clears: [
+            { lines: 3, isPerfectClear: true, isTSpin: false }
+        ]
+    },
+    {
+        //https://harddrop.com/wiki/Single_Double
+        editorStartingPosition: [
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'C', 'C', 'C', 'C', 'C'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+        ],
+        pieces: ['S','J', 'J', 'Z', 'T', 'T'],
+        clears: [
+            { lines: 2, isPerfectClear: false, isTSpin: true },
+            { lines: 1, isPerfectClear: false, isTSpin: true }
+        ]
+    },
+    {
+        editorStartingPosition: [
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'G', 'G'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'G', 'G'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+        ],
+        pieces: ['L', 'J', 'Z', 'S', 'I', 'T'],
+        clears: [
+            { lines: 2, isPerfectClear: false, isTSpin: true },
+        ]
+    },
+    {
+        //https://harddrop.com/wiki/Super_Spiral
+        editorStartingPosition: [
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'C', 'C', 'C', 'C'],
+            ['N', 'N', 'N', 'N', 'C', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'C', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+        ],
+        pieces: ['J', 'J', 'J', 'L', 'T'],
+        clears: [
+            { lines: 3, isPerfectClear: false, isTSpin: true },
+        ]
+    },
+    {
+        editorStartingPosition: [
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'C', 'C', 'C', 'C', 'C'],
+            ['N', 'N', 'N', 'N', 'C', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'G', 'C', 'C', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+            ['N', 'G', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
+        ],
+        pieces: ['I', 'J', 'T'],
+        clears: [
+            { lines: 3, isPerfectClear: false, isTSpin: true },
+        ]
+    }
 ]
+//Enough until May 30
 export const baseMission: EditorMission = {
     editorStartingPosition: [
         ['N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N', 'N'],
