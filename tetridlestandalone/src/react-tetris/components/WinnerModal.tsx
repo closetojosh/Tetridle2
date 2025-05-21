@@ -6,10 +6,11 @@ import { formatTime } from './Timer';
 interface WinnerModalProps {
     isOpen: boolean;
     onClose: () => void;
-    score: number; // The string to be copied to the clipboard
+    score: number;
+    puzzleDate: Date; // Add puzzle date prop
 }
 
-const WinnerModal: React.FC<WinnerModalProps> = ({ isOpen, score }) => {
+const WinnerModal: React.FC<WinnerModalProps> = ({ isOpen, score, puzzleDate }) => {
     const [showToast, setShowToast] = useState<boolean>(false);
     const toastTimeoutRef = useRef<NodeJS.Timeout | null>(null); // For managing the toast timeout
 
@@ -25,8 +26,11 @@ const WinnerModal: React.FC<WinnerModalProps> = ({ isOpen, score }) => {
 
     const handleShareScore = async () => {
         try {
-
-            await navigator.clipboard.writeText(`I beat today's Tetridle in ${formatTime(score)}! Try your hand at https://tetridle.com`);
+            const today = new Date();
+            const isToday = puzzleDate.toDateString() === today.toDateString();
+            const dateText = isToday ? "today's" : `the ${puzzleDate.toLocaleDateString()}`;
+            
+            await navigator.clipboard.writeText(`I beat ${dateText} Tetridle in ${formatTime(score)}! Try your hand at https://tetridle.com`);
             setShowToast(true);
 
             // Clear any existing timeout

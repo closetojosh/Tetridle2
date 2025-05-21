@@ -24,10 +24,10 @@ export function daysSinceMay122025(): number {
     if (isTest) {
         return missionList.length - 1;
     }
-    const MS_PER_DAY = 86_400_000;                     // 24 h × 60 m × 60 s × 1000 ms
+    const MS_PER_DAY = 86_400_000;                     // 24 h ï¿½ 60 m ï¿½ 60 s ï¿½ 1000 ms
     const anchor = new Date('2025-05-12T00:00:00-04:00'); // EDT (Toronto)
     const diffMs = Date.now() - anchor.getTime();
-    return Math.max(Math.floor(diffMs / MS_PER_DAY), 0);
+    return Math.max(Math.floor(diffMs / MS_PER_DAY), 0) + 1;
 }
 export interface GameSettings {
     keyboardControls: Map<string, Action>;
@@ -36,8 +36,7 @@ export interface GameSettings {
     sdf: number; // Soft Drop Factor/Speed
 }
 const App = () => {
-    //ts-ignore
-    const [currentMission, _] = useState<Mission>(translateMission(missionList[daysSinceMay122025()]));
+    const [currentMission, setCurrentMission] = useState<Mission>(translateMission(missionList[daysSinceMay122025()]));
     const [isStartingModalOpen, setIsStartingModalOpen] = useState<boolean>(true);
     const [isWinnerModelOpen, setIsWinnerModelOpen] = useState<boolean>(false);
     const [isCountdownActive, setIsCountdownActive] = useState<boolean>(false);
@@ -46,11 +45,23 @@ const App = () => {
         DEFAULT_GAME_SETTINGS
     );
     const [score, setScore] = useState<number>(0);
+    const [currentMissionIndex, setCurrentMissionIndex] = useState<number>(daysSinceMay122025());
+
+    const handleMissionSelect = (index: number) => {
+        setCurrentMission(translateMission(missionList[index]));
+        setCurrentMissionIndex(index);
+    };
+
     const handleGameWin = (timeTaken: number) => {
         setIsWinnerModelOpen(true);
         setScore(timeTaken);
-        const currentDate = new Date();
-        const dateString = currentDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+        
+        // Calculate puzzle date
+        const startDate = new Date('2025-05-12');
+        const puzzleDate = new Date(startDate);
+        puzzleDate.setDate(puzzleDate.getDate() + currentMissionIndex - 1);
+        const dateString = puzzleDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+        
         localStorage.setItem(`score-${dateString}`, timeTaken.toString()); 
         localStorage.setItem(`won-${dateString}`, '1'); 
         confetti({spread: 90});
@@ -69,14 +80,9 @@ const App = () => {
         if (keyMap && Object.entries(JSON.parse(keyMap)).length > 0) settings.current.keyboardControls = new Map(Object.entries(JSON.parse(keyMap)));
         const currentDate = new Date();
         const dateString = currentDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
-        const storedWon = localStorage.getItem(`won-${dateString}`);
         const storedScore = localStorage.getItem(`score-${dateString}`);
         const parsedStoredScore = parseInt(storedScore ?? '0');
         if (parsedStoredScore) startingTicks.current = parsedStoredScore;
-        if (storedWon && !isTest) {
-            handleGameWin(parsedStoredScore);
-            setIsStartingModalOpen(false);
-        }
     }, []);
     return (
         <div className="app">
@@ -88,11 +94,19 @@ const App = () => {
                 missions={dailyMissions}
                 setSettings={(newSettings: GameSettings) => { settings.current = newSettings}}
                 settings={settings}
+                onMissionSelect={handleMissionSelect}
+                currentMissionIndex={currentMissionIndex}
             />
             <WinnerModal
                 isOpen={isWinnerModelOpen}
                 onClose={() => setIsWinnerModelOpen(false)}
                 score={score}
+                puzzleDate={(() => {
+                    const startDate = new Date('2025-05-12');
+                    const puzzleDate = new Date(startDate);
+                    puzzleDate.setDate(puzzleDate.getDate() + currentMissionIndex);
+                    return puzzleDate;
+                })()}
             />
             <h1 className="title">Tetridle</h1>
             <Tetris

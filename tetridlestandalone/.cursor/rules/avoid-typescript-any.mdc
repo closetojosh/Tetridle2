@@ -1,0 +1,6 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+On files with .ts or .tsx extensions, always try to use typescript types over using "any".
