@@ -16,10 +16,9 @@ interface ModalProps {
     setSettings: (controls: GameSettings) => void; // Optional function to set controls
     settings: RefObject<GameSettings>; // Optional keyboard controls
     onMissionSelect: (index: number) => void;
-    currentMissionIndex: number;
 }
 
-const StartingModal: React.FC<ModalProps> = ({ isOpen, onClose, missions = [], setSettings, settings, onMissionSelect, currentMissionIndex }) => {
+const StartingModal: React.FC<ModalProps> = ({ isOpen, onClose, missions = [], setSettings, settings, onMissionSelect }) => {
     const [isControlsModalOpen, setIsControlsModalOpen] = useState<boolean>(false);
     const [selectedMissionIndex, setSelectedMissionIndex] = useState<number>(daysSinceMay122025());
     const closeControlsModal = () => { setIsControlsModalOpen(false)};

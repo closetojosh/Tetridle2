@@ -95,7 +95,6 @@ const App = () => {
                 setSettings={(newSettings: GameSettings) => { settings.current = newSettings}}
                 settings={settings}
                 onMissionSelect={handleMissionSelect}
-                currentMissionIndex={currentMissionIndex}
             />
             <WinnerModal
                 isOpen={isWinnerModelOpen}
