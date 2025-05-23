@@ -20,6 +20,7 @@ const defaultValue = {
     dasTimers: { left: -1, right: -1 },
     bottomOutTicks: 0,
     mission: {},
-    isMissionCompleted: [] as boolean[]
+    isMissionCompleted: [] as boolean[],
+    missionDate: new Date()
 } as Game;
 export const Context = React.createContext<Game>(defaultValue);

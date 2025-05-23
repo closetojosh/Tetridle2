@@ -42,7 +42,8 @@ type Props = {
     children: RenderFn;
     mission: Mission;
     handleGameWin: (score: number) => void;
-    startingTicks: number
+    startingTicks: number;
+    missionDate: Date;
 };
 
 //const defaultKeyboardMap: KeyboardMap = {
@@ -65,7 +66,7 @@ export default function Tetris(props: Props): React.JSX.Element {
     const [game, dispatch] = React.useReducer(Game.update, { ...Game.init(props.mission, props.handleGameWin, props.startingTicks, props.settings), state: 'PAUSED' });
     useEffect(() => {
         if (props.mission.clears.length === 0) return;
-        dispatch(Game.init(props.mission, props.handleGameWin, props.startingTicks, props.settings));
+        dispatch(Game.init(props.mission, props.handleGameWin, props.startingTicks, props.settings, props.missionDate));
     }
         , [props.mission]);
     const isWon = game.isMissionCompleted.every(mission => mission) && game.isMissionCompleted.length !== 0;

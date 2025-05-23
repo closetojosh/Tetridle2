@@ -46,7 +46,9 @@ const App = () => {
     );
     const [score, setScore] = useState<number>(0);
     const [currentMissionIndex, setCurrentMissionIndex] = useState<number>(daysSinceMay122025());
-
+    const startDate = new Date('2025-05-12');
+    const puzzleDate = new Date(startDate);
+    puzzleDate.setDate(puzzleDate.getDate() + currentMissionIndex - 1);
     const handleMissionSelect = (index: number) => {
         setCurrentMission(translateMission(missionList[index]));
         setCurrentMissionIndex(index);
@@ -56,10 +58,6 @@ const App = () => {
         setIsWinnerModelOpen(true);
         setScore(timeTaken);
         
-        // Calculate puzzle date
-        const startDate = new Date('2025-05-12');
-        const puzzleDate = new Date(startDate);
-        puzzleDate.setDate(puzzleDate.getDate() + currentMissionIndex - 1);
         const dateString = puzzleDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
         
         localStorage.setItem(`score-${dateString}`, timeTaken.toString()); 
@@ -78,12 +76,14 @@ const App = () => {
         const keyMap = localStorage.getItem('keyMap');
         if (raw) settings.current = JSON.parse(raw);
         if (keyMap && Object.entries(JSON.parse(keyMap)).length > 0) settings.current.keyboardControls = new Map(Object.entries(JSON.parse(keyMap)));
-        const currentDate = new Date();
-        const dateString = currentDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+        
+    }, []);
+    React.useEffect(() => {
+        const dateString = puzzleDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
         const storedScore = localStorage.getItem(`score-${dateString}`);
         const parsedStoredScore = parseInt(storedScore ?? '0');
         if (parsedStoredScore) startingTicks.current = parsedStoredScore;
-    }, []);
+    }, [puzzleDate])
     return (
         <div className="app">
             <Analytics />
@@ -113,6 +113,7 @@ const App = () => {
                 mission={activeMission}
                 handleGameWin={handleGameWin}
                 startingTicks={startingTicks.current}
+                missionDate={puzzleDate}
             >
                 {({
                     HeldPiece,

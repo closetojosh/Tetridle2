@@ -54,6 +54,7 @@ export type Game = {
     settings: GameSettings;
     handleGameWin?: (timeTaken: number) => void;
     lastMove: Action;
+    missionDate: Date;
 };
 
 
@@ -95,7 +96,7 @@ export const DEFAULT_GAME_SETTINGS : GameSettings = {
 export const ALL_ACTIONS_ORDERED = [
     "MOVE_DOWN", "MOVE_LEFT", "MOVE_RIGHT", "HARD_DROP", "FLIP_CLOCKWISE", "FLIP_COUNTERCLOCKWISE", "FLIP_180", "HOLD"
 ] as Action[]
-export const init = (mission: Mission, handleGameWin?: (timeTaken: number) => void, currentTicks?: number, settings?: GameSettings): Game => {
+export const init = (mission: Mission, handleGameWin?: (timeTaken: number) => void, currentTicks?: number, settings?: GameSettings, missionDate?: Date): Game => {
     //Make API call to get the mission
     const queue = PieceQueue.create(mission);
     const next = PieceQueue.getNext(queue);
@@ -114,11 +115,10 @@ export const init = (mission: Mission, handleGameWin?: (timeTaken: number) => vo
         isMissionCompleted: mission.clears.map(() => false),
         handleGameWin: handleGameWin,
         settings: settings ?? DEFAULT_GAME_SETTINGS,
-        lastMove: 'RESUME'
+        lastMove: 'RESUME',
+        missionDate: missionDate ?? new Date()
     };
 };
-const currentDate = new Date();
-const dateString = currentDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
 export const update = (game: Game, action: Action): Game => {
     switch (action) {
         case 'RESTART': {
@@ -143,7 +143,7 @@ export const update = (game: Game, action: Action): Game => {
         case 'TICK':
         {
             const incrementedTicks = game.ticks + 1;
-            localStorage.setItem(`score-${dateString}`, incrementedTicks.toString()); 
+            localStorage.setItem(`score-${game.missionDate.toISOString().split('T')[0]}`, incrementedTicks.toString()); 
             const tickUpdatedGame = { ...game, ticks: incrementedTicks };
             if (game.state !== 'PLAYING') return tickUpdatedGame;
             const updated = applyMove(moveDown, tickUpdatedGame);
