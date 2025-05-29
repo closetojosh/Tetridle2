@@ -49,8 +49,8 @@ const StartingModal: React.FC<ModalProps> = ({ isOpen, onClose, missions = [], s
             missionDate.setDate(missionDate.getDate() + i);
             missionDate.setHours(0, 0, 0, 0); // Set time to start of day
             
-            // Only show missions up to and including today
-            if (missionDate > today) {
+            // Only show missions up to and including today and that exist in missionList
+            if (missionDate > today || i >= missionList.length) {
                 return null;
             }
 

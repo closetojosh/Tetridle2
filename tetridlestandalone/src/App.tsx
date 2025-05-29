@@ -24,10 +24,11 @@ export function daysSinceMay122025(): number {
     if (isTest) {
         return missionList.length - 1;
     }
-    const MS_PER_DAY = 86_400_000;                     // 24 h � 60 m � 60 s � 1000 ms
+    const MS_PER_DAY = 86_400_000;                     // 24 h × 60 m × 60 s × 1000 ms
     const anchor = new Date('2025-05-12T00:00:00-04:00'); // EDT (Toronto)
     const diffMs = Date.now() - anchor.getTime();
-    return Math.max(Math.floor(diffMs / MS_PER_DAY), 0) + 1;
+    const days = Math.max(Math.floor(diffMs / MS_PER_DAY), 0) + 1;
+    return Math.min(days, missionList.length - 1);
 }
 export interface GameSettings {
     keyboardControls: Map<string, Action>;
