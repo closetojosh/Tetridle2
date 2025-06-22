@@ -163,12 +163,12 @@ export const update = (game: Game, action: Action): Game => {
             }
         }
         case 'MOVE_LEFT': {
-            let updated = applyMove(moveLeft, game);
+            const updated = applyMove(moveLeft, game);
             if (game.piece != updated.piece) updated.lastMove = 'MOVE_LEFT';
             return updated
         }
         case 'MOVE_RIGHT': {
-            let updated = applyMove(moveRight, game);
+            const updated = applyMove(moveRight, game);
             if (game.piece != updated.piece) updated.lastMove = 'MOVE_RIGHT';
             return updated;
         }

@@ -34,7 +34,7 @@
     z-index: 1001;
 }
 .win-modal{
-    height: 220px;
+    height: 280px;
 }
 @keyframes fadeInScale {
     from {

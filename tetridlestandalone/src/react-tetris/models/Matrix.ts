@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
+ 
 import Constants from '../constants';
 import { getKickData, tk } from '../srsKicks';
 import type { KickOffsets } from '../srsKicks';

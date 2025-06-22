@@ -62,12 +62,20 @@ const WinnerModal: React.FC<WinnerModalProps> = ({ isOpen, score, puzzleDate }) 
                 <div className="modal-content win-modal" onClick={handleContentClick}>
                     <h1 className="modal-title">You won!</h1>
                     <h3>and it only took you {formatTime(score)}. Come back tomorrow for a new puzzle!</h3>
-                    <button
-                        className="modal-play-button" // Reusing green button style
-                        onClick={handleShareScore}
-                    >
-                        Share your score!
-                    </button>
+                    <div className="vertical-flexbox">
+                        <button
+                            className="modal-play-button" // Reusing green button style
+                            onClick={handleShareScore}
+                        >
+                            Share your score!
+                        </button>
+                        <button
+                            className="modal-control-button" // Reusing control button style
+                            onClick={() => window.location.reload()}
+                        >
+                            Try a different mission
+                        </button>
+                    </div>
 
                     {/* Toast Notification */}
                     {showToast && (

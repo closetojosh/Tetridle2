@@ -69,6 +69,7 @@ const App = () => {
         setIsStartingModalOpen(false);
         setIsCountdownActive(true);
     };
+
     const dailyMissions = currentMission.clears.map(mission => getClearString(mission));
     const [activeMission, setActiveMission] = useState<Mission>(emptyMission);
     const countdownEndCallback = () => { setActiveMission(currentMission) }

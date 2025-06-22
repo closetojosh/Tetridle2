@@ -7,8 +7,8 @@ const T = 'T';
 const Z = 'Z';
 const S = 'S';
 export const translateMission = (mission: EditorMission): Mission => {
-    let grid = mission.editorStartingPosition;
-    let subGrid = grid.map(row => row.map((str: string) => {
+    const grid = mission.editorStartingPosition;
+    const subGrid = grid.map(row => row.map((str: string) => {
         if (str == 'N') return null;
         if (str == 'G') return 'grey';
         return str;
@@ -1452,7 +1452,7 @@ export const missionList: EditorMission[] = [
         clears: [
             { lines: 2, isPerfectClear: true, isTSpin: false },
         ]
-    },
+    }
 ]
 //Enough until Jun 29
 export const baseMission: EditorMission = {
